@@ -7,31 +7,31 @@ import { ApiPlayerResponse, PlayerResponse } from './player.interface';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class TeamService {
 
-    constructor(
-        private http: HttpClient
-    ){}
+  constructor(
+    private http: HttpClient
+  ) { }
 
-    searchLeague(param: string): Observable<LeagueResponse[]> {
-        return this.http.get<ApiLeagueResponse>('./assets/league.json').pipe(
-            map((apiresponse) => {
-                return apiresponse.response;
-            })
-        );
-    }
+  searchLeague(param: string): Observable<LeagueResponse[]> {
+    return this.http.get<ApiLeagueResponse>('./assets/league.json').pipe(
+      map((apiresponse) => {
+        return apiresponse.response;
+      })
+    );
+  }
 
-    searchPlayer(params: PlayerParam): Observable<PlayerResponse[]> {
-        const league = params.league;
-        const player = params.player;
+  searchPlayer(params: PlayerParam): Observable<PlayerResponse[]> {
+    const league = params.league;
+    const player = params.player;
 
-        // TODO: Cambia la URL con los parámetros adecuados
-        return this.http.get<ApiPlayerResponse>('./assets/player.json').pipe(
-            map((apiresponse) => {
-                return apiresponse.response;
-            })
-        );
-    }
+    // TODO: Cambia la URL con los parámetros adecuados
+    return this.http.get<ApiPlayerResponse>('./assets/player.json').pipe(
+      map((apiresponse) => {
+        return apiresponse.response;
+      })
+    );
+  }
 }
