@@ -77,4 +77,12 @@ export class TeamComponent implements OnInit, OnDestroy {
 
     this.savedPlayer = true;
   }
+
+  cleanAllState(){
+    this.showPlayer = false;
+    this.savedPlayer = false;
+    this.showSelectedLeague = false;
+    this.selectedLeague = "";
+    this.showLeagues = true;
+  }
 }

@@ -7,6 +7,10 @@
   }
 }
 
+.leagueContainer{
+  display: flex;
+}
+
 .leagueItemContainer {
   max-height: 200px;
   overflow-y: auto;
