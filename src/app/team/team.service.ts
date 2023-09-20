@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ApiLeagueResponse, LeagueResponse } from './league.interface';
+import { ApiLeagueResponse, League, LeagueResponse } from './league.interface';
 import { PlayerParam } from './playerParams.interface';
 import { ApiPlayerResponse, PlayerResponse } from './player.interface';
 import { Injectable } from '@angular/core';
@@ -10,27 +10,39 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class TeamService {
-
+  private leagueApiUrl = "https://api-football-v1.p.rapidapi.com/v3/leagues";
+  private playerApiUrl = "https://api-football-v1.p.rapidapi.com/v3/players";
+  
   constructor(
     private http: HttpClient
   ) { }
 
-  searchLeague(param: string): Observable<LeagueResponse[]> {
-    return this.http.get<ApiLeagueResponse>('./assets/league.json').pipe(
+  searchLeague(param: string): Observable<any[]> {
+    return this.http.get<ApiLeagueResponse>(`${this.leagueApiUrl}?search=${param}`).pipe(
       map((apiresponse) => {
-        return apiresponse.response;
+        return apiresponse.response.map((league) => {
+          return {
+            id: league.league.id,
+            name: league.league.name,
+            country: league.country.name
+          }
+        })
       })
     );
   }
 
-  searchPlayer(params: PlayerParam): Observable<PlayerResponse[]> {
-    const league = params.league;
+  searchPlayer(params: PlayerParam): Observable<any[]> {
+    const leagueID = params.leagueID;
     const player = params.player;
 
-    // TODO: Cambia la URL con los parámetros adecuados
-    return this.http.get<ApiPlayerResponse>('./assets/player.json').pipe(
+    return this.http.get<ApiPlayerResponse>(`${this.playerApiUrl}?league=${leagueID}&search=${player}`).pipe(
       map((apiresponse) => {
-        return apiresponse.response;
+        return apiresponse.response.map((player) => {
+          return {
+            name: player.player.name,
+            photo: player.player.photo
+          }
+        });
       })
     );
   }

@@ -1,0 +1,11 @@
+<input placeholder="buscar liga" (change)="searchLeagues($event)">
+<ul *ngFor="let league of leagues">
+    <li (click)="selectLeague(league)">
+        {{ league.name }} {{ league.country }}
+    </li>
+</ul>
+
+
+<input placeholder="buscar jugador" (change)="searchPlayers($event)">
+<span> {{ player?.name }} </span>
+<img src="{{ player?.photo }}" alt="{{ player?.name }}"/>

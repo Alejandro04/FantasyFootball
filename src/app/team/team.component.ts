@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { TeamService } from "./team.service";
-import { LeagueResponse } from "./league.interface";
+import { League, LeagueResponse } from "./league.interface";
 import { PlayerParam } from "./playerParams.interface";
-import { PlayerResponse } from "./player.interface";
+import { Player, PlayerResponse } from "./player.interface";
 
 @Component({
   selector: 'app-team',
@@ -10,35 +10,46 @@ import { PlayerResponse } from "./player.interface";
   styleUrls: ['./team.component.scss']
 })
 export class TeamComponent implements OnInit, OnDestroy {
-  private leagues: LeagueResponse[] = [];
-  private players: PlayerResponse[] = [];
+  leagues: League[] = [];
+  player: Player | undefined;
+  selectedLeagueID: number = 0;
 
   constructor(
     private teamService: TeamService
   ) { }
 
-  ngOnInit() {
-    this.getLeagues("")
-    const params = {
-      league: '61',
-      player: 'neymar'
-    }
-    this.getPlayers(params)
-  }
+  ngOnInit() {}
 
   ngOnDestroy() { }
 
-  getLeagues(params: string) {
-    this.teamService.searchLeague(params).subscribe((leagues) => {
+  searchLeagues(event: Event) {
+    const element = event.target as HTMLSelectElement;
+    const criteria = element.value;
+
+    this.teamService.searchLeague(criteria).subscribe((leagues) => {
       this.leagues = leagues;
-      console.log("leagues", this.leagues)
     })
   }
 
-  getPlayers(params: PlayerParam) {
+  searchPlayers(event: Event) {
+    const element = event.target as HTMLSelectElement;
+    const criteria = element.value;
+
+    const params = {
+      player: criteria,
+      leagueID: this.selectedLeagueID
+    }
+
     this.teamService.searchPlayer(params).subscribe((players) => {
-      this.players = players;
-      console.log("players", this.players)
+      this.player = players[0];
     })
+  }
+
+  selectLeague(league: League){
+    this.selectedLeagueID = league.id;      
+  }
+
+  selectPlayer(player: Player){
+    //
   }
 }

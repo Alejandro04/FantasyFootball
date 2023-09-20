@@ -27,6 +27,7 @@ export interface ApiLeagueResponse {
     name: string
     type: string
     logo: string
+    country?: string
   }
   
   export interface Country {
