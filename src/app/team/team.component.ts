@@ -13,12 +13,15 @@ export class TeamComponent implements OnInit, OnDestroy {
   leagues: League[] = [];
   player: Player | undefined;
   selectedLeagueID: number = 0;
+  team: any;
 
   constructor(
     private teamService: TeamService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+   
+  }
 
   ngOnDestroy() { }
 
@@ -45,11 +48,20 @@ export class TeamComponent implements OnInit, OnDestroy {
     })
   }
 
-  selectLeague(league: League){
-    this.selectedLeagueID = league.id;      
+  selectLeague(league: League) {
+    this.selectedLeagueID = league.id;
   }
 
-  selectPlayer(player: Player){
-    //
+  savePlayer() {
+    const localStorageData = localStorage.getItem('team');
+    if (localStorageData) {
+      const existingData = JSON.parse(localStorageData);
+      const newData = { name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png' }; // Reemplaza esto con tus datos reales
+      existingData.push(newData);
+      localStorage.setItem('team', JSON.stringify(existingData));
+    } else {
+      const initialData = [{ name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png' }];
+      localStorage.setItem('team', JSON.stringify(initialData));
+    }
   }
 }

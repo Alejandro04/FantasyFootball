@@ -7,5 +7,7 @@
 
 
 <input placeholder="buscar jugador" (change)="searchPlayers($event)">
-<span> {{ player?.name }} </span>
-<img src="{{ player?.photo }}" alt="{{ player?.name }}"/>
+<div (click)="savePlayer()">
+    <span> {{ player?.name }} </span>
+    <img src="{{ player?.photo }}" alt="{{ player?.name }}"/>
+</div>

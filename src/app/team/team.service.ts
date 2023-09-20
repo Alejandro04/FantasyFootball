@@ -18,8 +18,9 @@ export class TeamService {
   ) { }
 
   searchLeague(param: string): Observable<any[]> {
-    return this.http.get<ApiLeagueResponse>(`${this.leagueApiUrl}?search=${param}`).pipe(
-      map((apiresponse) => {
+    //return this.http.get<ApiLeagueResponse>(`${this.leagueApiUrl}?search=${param}`).pipe(
+      return this.http.get<ApiLeagueResponse>(`./assets/league.json`).pipe(
+    map((apiresponse) => {
         return apiresponse.response.map((league) => {
           return {
             id: league.league.id,
@@ -35,8 +36,9 @@ export class TeamService {
     const leagueID = params.leagueID;
     const player = params.player;
 
-    return this.http.get<ApiPlayerResponse>(`${this.playerApiUrl}?league=${leagueID}&search=${player}`).pipe(
-      map((apiresponse) => {
+    //return this.http.get<ApiPlayerResponse>(`${this.playerApiUrl}?league=${leagueID}&search=${player}`).pipe(
+      return this.http.get<ApiPlayerResponse>(`./assets/player.json`).pipe(  
+    map((apiresponse) => {
         return apiresponse.response.map((player) => {
           return {
             name: player.player.name,
