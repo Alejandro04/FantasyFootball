@@ -33,7 +33,8 @@ export interface ApiPlayerResponse {
     height: string
     weight: string
     injured: boolean
-    photo: string
+    photo: string,
+    position: string;
   }
   
   export interface Birth {

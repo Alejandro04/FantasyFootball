@@ -42,7 +42,10 @@ export class TeamService {
         return apiresponse.response.map((player) => {
           return {
             name: player.player.name,
-            photo: player.player.photo
+            photo: player.player.photo,
+            age: player.player.age,
+            nationality: player.player.nationality,
+            position: 'Atacante'
           }
         });
       })

@@ -1,13 +1,36 @@
-<input placeholder="buscar liga" (change)="searchLeagues($event)">
-<ul *ngFor="let league of leagues">
-    <li (click)="selectLeague(league)">
+<section class="leagueContainer">
+  <input placeholder="buscar liga" (change)="searchLeagues($event)">
+  <div class="leagueItemContainer" *ngIf="showLeagues">
+    <ul *ngFor="let league of leagues">
+      <li (click)="selectLeague(league)">
         {{ league.name }} {{ league.country }}
-    </li>
-</ul>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="showSelectedLeague">
+    <label>Liga seleccionada: </label>
+    {{ selectedLeague.name }} de {{ selectedLeague.country }}
+  </div>
+</section>
 
 
-<input placeholder="buscar jugador" (change)="searchPlayers($event)">
-<div (click)="savePlayer()">
-    <span> {{ player?.name }} </span>
-    <img src="{{ player?.photo }}" alt="{{ player?.name }}"/>
-</div>
+<section class="playerContainer">
+  <input placeholder="buscar jugador" (change)="searchPlayers($event)">
+  <div>
+    <section class="selectPlayerContainer" *ngIf="showPlayer">
+      <img src="{{ player?.photo }}" alt="{{ player?.name }}" />
+      <div>
+        <div> <label>Nombre: </label> {{ player?.name }} </div>
+        <div> <label>Edad: </label> {{ player?.age }} </div>
+        <div> <label>Nacionalidad: </label> {{ player?.nationality }} </div>
+        <div> <label>Posición: </label> {{ player?.position }} </div>
+        <button (click)="savePlayer()"> Fichar </button>
+      </div>
+    </section>
+    <section *ngIf="savedPlayer">
+      <h2>Felicidades!</h2>
+      <p> Has fichado a {{ player?.name }} </p>
+    </section>
+  </div>
+
+</section>
