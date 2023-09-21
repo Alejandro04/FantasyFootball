@@ -69,12 +69,7 @@
   padding: 10px;
 
   @media (max-width: 768px) {
-    position: fixed;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    padding: 0 5px 0 5px;
+    display: none;
   }
 
   h2{
