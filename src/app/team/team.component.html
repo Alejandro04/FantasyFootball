@@ -29,6 +29,7 @@
           <div> <label>Edad: </label> {{ player?.age }} </div>
           <div> <label>Nacionalidad: </label> {{ player?.nationality }} </div>
           <div> <label>Posición: </label> {{ player?.position }} </div>
+          <div> <label>Equipo: </label> {{ player?.teamName }} </div>
           <button (click)="savePlayer()" *ngIf="!savedPlayer"> Fichar </button>
         </div>
       </section>

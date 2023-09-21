@@ -48,7 +48,9 @@ export class TeamService {
             photo: player.player.photo,
             age: player.player.age,
             nationality: player.player.nationality,
-            position: 'Atacante'
+            position: player.statistics[0].games.position,
+            teamID: player.statistics[0].team.id,
+            teamName: player.statistics[0].team.name
           }
         });
       })

@@ -55,6 +55,7 @@ export class TeamComponent implements OnInit, OnDestroy {
         switchMap(criteria => this.teamService.searchPlayer({ player: criteria, leagueID: this.selectedLeagueID })) // Realiza la búsqueda
       )
       .subscribe(players => {
+        console.log(players[0])
         this.player = players[0];
         this.showPlayer = true;
       });

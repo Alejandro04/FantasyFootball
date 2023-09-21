@@ -35,6 +35,7 @@ export interface ApiPlayerResponse {
     injured: boolean
     photo: string,
     position: string;
+    teamName: string;
   }
   
   export interface Birth {
