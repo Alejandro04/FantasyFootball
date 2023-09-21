@@ -9,8 +9,6 @@
     display: flex;
     width: 100%;
     flex-direction: column;
-    overflow-y: scroll;
-    height: 100%;
   }
 }
 
@@ -33,7 +31,6 @@
   background-color: #fff;
 
   @media (max-width: 768px) {
-    overflow-y: scroll;
     max-height: 150px;
   }
 

@@ -3,7 +3,7 @@ import { TeamService } from "./team.service";
 import { League, LeagueResponse } from "./league.interface";
 import { PlayerParam } from "./playerParams.interface";
 import { Player, PlayerResponse } from "./player.interface";
-import { Subject, Subscription } from "rxjs";
+import { Subject, Subscription, debounceTime, distinctUntilChanged, switchMap } from "rxjs";
 
 @Component({
   selector: 'app-team',
@@ -23,35 +23,53 @@ export class TeamComponent implements OnInit, OnDestroy {
   playerDataSubject = new Subject;
   leagueSubscription: Subscription = new Subscription;
   playerSubscription: Subscription = new Subscription;
+  private searchLeaguesSubject = new Subject<string>();
+  private searchPlayersSubject = new Subject<string>();
 
   constructor(
     private teamService: TeamService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.searchLeaguesDebounce();
+    this.searchPlayersDebounce();
+  }
+
+  searchLeaguesDebounce(){
+    this.leagueSubscription = this.searchLeaguesSubject
+      .pipe(
+        debounceTime(1000),
+        distinctUntilChanged(), 
+        switchMap(criteria => this.teamService.searchLeague(criteria))
+      )
+      .subscribe(leagues => {
+        this.leagues = leagues;
+      });
+  }
+
+  searchPlayersDebounce(){
+    this.playerSubscription = this.searchPlayersSubject
+      .pipe(
+        debounceTime(1000),
+        distinctUntilChanged(),
+        switchMap(criteria => this.teamService.searchPlayer({ player: criteria, leagueID: this.selectedLeagueID })) // Realiza la búsqueda
+      )
+      .subscribe(players => {
+        this.player = players[0];
+        this.showPlayer = true;
+      });
+  }
 
   searchLeagues(event: Event) {
     const element = event.target as HTMLSelectElement;
     const criteria = element.value;
-
-    this.leagueSubscription = this.teamService.searchLeague(criteria).subscribe((leagues) => {
-      this.leagues = leagues;
-    })
+    this.searchLeaguesSubject.next(criteria);
   }
 
   searchPlayers(event: Event) {
     const element = event.target as HTMLSelectElement;
     const criteria = element.value;
-
-    const params = {
-      player: criteria,
-      leagueID: this.selectedLeagueID
-    }
-
-    this.playerSubscription = this.teamService.searchPlayer(params).subscribe((players) => {
-      this.player = players[0];
-      this.showPlayer = true;
-    })
+    this.searchPlayersSubject.next(criteria);
   }
 
   selectLeague(league: League) {

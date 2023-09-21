@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 import { ApiLeagueResponse, League, LeagueResponse } from './league.interface';
 import { PlayerParam } from './playerParams.interface';
 import { ApiPlayerResponse, PlayerResponse } from './player.interface';
@@ -21,8 +21,8 @@ export class TeamService {
 
   searchLeague(param: string): Observable<any[]> {
     //return this.http.get<ApiLeagueResponse>(`${this.leagueApiUrl}?search=${param}`).pipe(
-      return this.http.get<ApiLeagueResponse>(`./assets/league.json`).pipe(
-    map((apiresponse) => {
+    return this.http.get<ApiLeagueResponse>(`./assets/league.json`).pipe(
+      map((apiresponse) => {
         return apiresponse.response.map((league) => {
           return {
             id: league.league.id,
@@ -39,8 +39,8 @@ export class TeamService {
     const player = params.player;
 
     //return this.http.get<ApiPlayerResponse>(`${this.playerApiUrl}?league=${leagueID}&search=${player}`).pipe(
-      return this.http.get<ApiPlayerResponse>(`./assets/player.json`).pipe(  
-    map((apiresponse) => {
+    return this.http.get<ApiPlayerResponse>(`./assets/player.json`).pipe(
+      map((apiresponse) => {
         return apiresponse.response.map((player) => {
           return {
             id: player.player.id,
