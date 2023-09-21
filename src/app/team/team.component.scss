@@ -18,6 +18,11 @@
 
 .leagueContainer{
   display: flex;
+  input{
+    max-width: 200px;
+    margin: auto;
+    margin-right: 10px;
+  }
   :first-child{
     margin-bottom: 10px;
   }
@@ -30,6 +35,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    input{
+      margin: auto;
+    }
   }
 }
 
@@ -39,6 +48,7 @@
   background-color: #eee;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  max-width: 220px;
 }
 
 .selectPlayerContainer{
