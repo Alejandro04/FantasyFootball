@@ -1,3 +1,7 @@
+.content {
+  padding: 30px;
+}
+
 .leagueContainer,
 .playerContainer {
   padding: 10px;
@@ -9,6 +13,20 @@
 
 .leagueContainer{
   display: flex;
+  input{
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  :first-child{
+    margin-bottom: 10px;
+  }
 }
 
 .leagueItemContainer {
