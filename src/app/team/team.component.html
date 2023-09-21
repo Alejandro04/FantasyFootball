@@ -31,7 +31,7 @@
         <button (click)="savePlayer()" *ngIf="!savedPlayer"> Fichar </button>
       </div>
     </section>
-    <section *ngIf="savedPlayer">
+    <section *ngIf="savedPlayer" class="savedPlayerContainer">
       <h2>Felicidades!</h2>
       <p> Has fichado a {{ player?.name }} </p>
       <button (click)="cleanAllState()"> Fichar otro jugador </button>

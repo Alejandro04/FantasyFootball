@@ -3,6 +3,7 @@ import { TeamService } from "./team.service";
 import { League, LeagueResponse } from "./league.interface";
 import { PlayerParam } from "./playerParams.interface";
 import { Player, PlayerResponse } from "./player.interface";
+import { Subject, Subscription } from "rxjs";
 
 @Component({
   selector: 'app-team',
@@ -19,22 +20,21 @@ export class TeamComponent implements OnInit, OnDestroy {
   showSelectedLeague: boolean = false;
   showPlayer: boolean = false;
   savedPlayer: boolean = false;
+  playerDataSubject = new Subject;
+  leagueSubscription: Subscription = new Subscription;
+  playerSubscription: Subscription = new Subscription;
 
   constructor(
     private teamService: TeamService
   ) { }
 
-  ngOnInit() {
-    //this.savePlayer()
-  }
-
-  ngOnDestroy() { }
+  ngOnInit() {}
 
   searchLeagues(event: Event) {
     const element = event.target as HTMLSelectElement;
     const criteria = element.value;
 
-    this.teamService.searchLeague(criteria).subscribe((leagues) => {
+    this.leagueSubscription = this.teamService.searchLeague(criteria).subscribe((leagues) => {
       this.leagues = leagues;
     })
   }
@@ -48,7 +48,7 @@ export class TeamComponent implements OnInit, OnDestroy {
       leagueID: this.selectedLeagueID
     }
 
-    this.teamService.searchPlayer(params).subscribe((players) => {
+    this.playerSubscription = this.teamService.searchPlayer(params).subscribe((players) => {
       this.player = players[0];
       this.showPlayer = true;
     })
@@ -63,16 +63,15 @@ export class TeamComponent implements OnInit, OnDestroy {
 
   savePlayer() {
     const localStorageData = localStorage.getItem('team');
+    const newData = { id: 270, name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png', age: '33', nationality: 'Brazil', position: 'Atacante' };
+    this.teamService.addPlayer(newData);
+
     if (localStorageData) {
-      console.log("con data")
       const existingData = JSON.parse(localStorageData);
-      const newData = { name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png', age: '33', nationality: 'Brazil', position: 'Atacante' };
       existingData.push(newData);
       localStorage.setItem('team', JSON.stringify(existingData));
     } else {
-      console.log("sin data")
-      const initialData = [{ name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png', age: '33', nationality: 'Brazil', position: 'Atacante' }];
-      localStorage.setItem('team', JSON.stringify(initialData));
+      localStorage.setItem('team', JSON.stringify([newData]));
     }
 
     this.savedPlayer = true;
@@ -84,5 +83,10 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.showSelectedLeague = false;
     this.selectedLeague = "";
     this.showLeagues = true;
+  }
+
+  ngOnDestroy() { 
+    this.leagueSubscription.unsubscribe();
+    this.playerSubscription.unsubscribe();
   }
 }

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiLeagueResponse, League, LeagueResponse } from './league.interface';
 import { PlayerParam } from './playerParams.interface';
@@ -12,7 +12,9 @@ import { Injectable } from '@angular/core';
 export class TeamService {
   private leagueApiUrl = "https://api-football-v1.p.rapidapi.com/v3/leagues";
   private playerApiUrl = "https://api-football-v1.p.rapidapi.com/v3/players";
-  
+  private playerListSubject = new Subject;
+  playerList$ = this.playerListSubject.asObservable();
+
   constructor(
     private http: HttpClient
   ) { }
@@ -41,6 +43,7 @@ export class TeamService {
     map((apiresponse) => {
         return apiresponse.response.map((player) => {
           return {
+            id: player.player.id,
             name: player.player.name,
             photo: player.player.photo,
             age: player.player.age,
@@ -50,5 +53,13 @@ export class TeamService {
         });
       })
     );
+  }
+
+  getPlayer() {
+    return this.playerListSubject;
+  }
+
+  addPlayer(player: any) {
+    this.playerListSubject.next(player);
   }
 }
