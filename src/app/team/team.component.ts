@@ -89,6 +89,11 @@ export class TeamComponent implements OnInit, OnDestroy {
       const existingData = JSON.parse(localStorageData);
       const getMaxPlayerForTeam = this.getMaxPlayerForTeam(existingData, newData.teamID);
       
+      if(existingData.length > 16){
+        console.log("máximo 16 players por equipo")
+        return 
+      }
+
       if(!getMaxPlayerForTeam.saveMorePlayers){
         console.log("Equipos full")
         console.log(getMaxPlayerForTeam.fullTeamsIDs)
