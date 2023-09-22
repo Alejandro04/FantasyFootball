@@ -25,6 +25,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   msgValidation: string = "";
   msgPositionValidation: string = "";
   msgCountValidation: string = "";
+  msgHasPlayer: string = "";
   leagueSubscription: Subscription = new Subscription;
   playerSubscription: Subscription = new Subscription;
   private searchLeaguesSubject = new Subject<string>();
@@ -85,11 +86,13 @@ export class TeamComponent implements OnInit, OnDestroy {
 
   savePlayer() {
     const localStorageData = localStorage.getItem('team');
-    const newData = this.player;
-    this.teamService.addPlayer(newData);
+    const existingData = JSON.parse(localStorageData ? localStorageData : "");
+    const hasPlayer = existingData.find((player:Player) => player.id === this.player.id);
+    let newData = this.player;
 
-    if (localStorageData) {
-      const existingData = JSON.parse(localStorageData);
+    if (existingData && !hasPlayer) {
+      console.log("no tenemos el jugador, guardando")
+      this.teamService.addPlayer(newData);
       const getMaxPlayerForTeam = this.getMaxPlayerForTeam(existingData, newData.teamID, newData.position);
 
       if (existingData.length > 16) {
@@ -115,6 +118,12 @@ export class TeamComponent implements OnInit, OnDestroy {
       }
 
     } else {
+      if(hasPlayer){
+        this.playerValidate = true;
+        this.msgHasPlayer = "No podemos fichar dos veces al mismo jugador";
+        return
+      }
+
       localStorage.setItem('team', JSON.stringify([newData]));
       this.savedPlayer = true;
     }
