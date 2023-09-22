@@ -50,6 +50,10 @@
         <p> {{ msgHasPlayer }} </p>
         <button (click)="cleanAllState()"> Fichar otro jugador </button>
       </section>
+      <section *ngIf="playerNotFound" class="playerNotFound">
+        <h2>Jugador no encontrado :(</h2>
+        <button (click)="cleanAllState()"> Intente de nuevo </button>
+      </section>
     </div>
   </section>
 </div>

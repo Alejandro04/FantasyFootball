@@ -30,6 +30,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   leagueInput: string = "";
   msgCompleteTeam: string = "";
   quantityPlayers: number = 0;
+  playerNotFound: boolean = false;
   leagueSubscription: Subscription = new Subscription;
   playerSubscription: Subscription = new Subscription;
   private searchLeaguesSubject = new Subject<string>();
@@ -65,8 +66,13 @@ export class TeamComponent implements OnInit, OnDestroy {
         switchMap(criteria => this.teamService.searchPlayer({ player: criteria, leagueID: this.selectedLeagueID })) // Realiza la búsqueda
       )
       .subscribe(players => {
-        this.player = players[0];
-        this.showPlayer = true;
+        if(players[0]){
+          this.player = players[0];
+          this.playerNotFound = false;
+          this.showPlayer = true;
+        }else{
+          this.playerNotFound = true;
+        }
       });
   }
 
@@ -275,6 +281,7 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.showLeagues = false;
     this.leagues = [];
     this.leagueInput = "";
+    this.playerNotFound = false;
   }
 
   ngOnDestroy() {
