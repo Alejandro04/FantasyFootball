@@ -24,18 +24,18 @@ export interface ApiPlayerResponse {
   
   export interface Player {
     id: number
-    name: string
-    firstname: string
-    lastname: string
-    age: number
-    birth: Birth
-    nationality: string
-    height: string
-    weight: string
-    injured: boolean
-    photo: string,
+    name?: string
+    firstname?: string
+    lastname?: string
+    age?: number
+    birth?: Birth
+    nationality?: string
+    height?: string
+    weight?: string
+    injured?: boolean
+    photo?: string,
     position: string;
-    teamName: string;
+    teamName?: string;
     teamID: number;
   }
   

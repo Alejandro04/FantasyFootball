@@ -23,19 +23,19 @@
   <section class="playerContainer">
     <div>
       <section class="selectPlayerContainer" *ngIf="showPlayer">
-        <img src="{{ player?.photo }}" alt="{{ player?.name }}" />
+        <img src="{{ player.photo }}" alt="{{ player.name }}" />
         <div class="playerDetails">
-          <div> <label>Nombre: </label> {{ player?.name }} </div>
-          <div> <label>Edad: </label> {{ player?.age }} </div>
-          <div> <label>Nacionalidad: </label> {{ player?.nationality }} </div>
-          <div> <label>Posición: </label> {{ player?.position }} </div>
-          <div> <label>Equipo: </label> {{ player?.teamName }} </div>
+          <div> <label>Nombre: </label> {{ player.name }} </div>
+          <div> <label>Edad: </label> {{ player.age }} </div>
+          <div> <label>Nacionalidad: </label> {{ player.nationality }} </div>
+          <div> <label>Posición: </label> {{ player.position }} </div>
+          <div> <label>Equipo: </label> {{ player.teamName }} </div>
           <button (click)="savePlayer()" *ngIf="!savedPlayer"> Fichar </button>
         </div>
       </section>
       <section *ngIf="savedPlayer" class="savedPlayerContainer">
         <h2>Felicidades!</h2>
-        <p> Has fichado a {{ player?.name }} </p>
+        <p> Has fichado a {{ player.name }} </p>
         <button (click)="cleanAllState()"> Fichar otro jugador </button>
       </section>
     </div>
