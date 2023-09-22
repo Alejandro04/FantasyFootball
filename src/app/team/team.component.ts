@@ -82,30 +82,33 @@ export class TeamComponent implements OnInit, OnDestroy {
 
   savePlayer() {
     const localStorageData = localStorage.getItem('team');
-    const newData = { id: 270, name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png', age: '33', nationality: 'Brazil', position: 'Atacante', teamName: 'Paris', teamID: 46 };
+    const newData = { id: 270, name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png', age: '33', nationality: 'Brazil', position: 'Attacker', teamName: 'Paris', teamID: 46 };
     this.teamService.addPlayer(newData);
 
     if (localStorageData) {
       const existingData = JSON.parse(localStorageData);
-      const getMaxPlayerForTeam = this.getMaxPlayerForTeam(existingData, newData.teamID);
+      const getMaxPlayerForTeam = this.getMaxPlayerForTeam(existingData, newData.teamID, newData.position);
       
       if(existingData.length > 16){
         console.log("máximo 16 players por equipo")
         return 
       }
 
-      if(!getMaxPlayerForTeam.saveMorePlayers){
-        console.log("Equipos full")
-        console.log(getMaxPlayerForTeam.fullTeamsIDs)
-        console.log("selecciona jugador de otro equipo")
+      if(!getMaxPlayerForTeam.saveMoreIDPlayers || 
+        !getMaxPlayerForTeam.saveMorePositionPlayers){
+        console.log("No puede guardar este jugador")
+        console.log("Cambia jugador si ya tiene 4 del mismo equipo o elimina uno si ya tiene 16 jugadores")
         return
       }
 
-      if(getMaxPlayerForTeam.saveMorePlayers && Array.isArray(existingData)){  
-        existingData.push(newData);
-        localStorage.setItem('team', JSON.stringify(existingData));
-        this.savedPlayer = true;
-        return
+      if(getMaxPlayerForTeam.saveMoreIDPlayers && 
+        getMaxPlayerForTeam.saveMorePositionPlayers && 
+        Array.isArray(existingData)
+        ){  
+          existingData.push(newData);
+          localStorage.setItem('team', JSON.stringify(existingData));
+          this.savedPlayer = true;
+          return
       }
 
     } else {
@@ -114,34 +117,59 @@ export class TeamComponent implements OnInit, OnDestroy {
     }
   }
 
-  getMaxPlayerForTeam(existingData:Player[], teamID:number){
+  getMaxPlayerForTeam(existingData:Player[], teamID:number, position:string){
     let teamsIDs:number[] = this.getTeamsID(existingData)
+    let positions: string[] = this.getTeamPositions(existingData);
     const maxPlayerForTeam = 4;
+    const maxAttackersForTeam = 2;
     let fullTeamsIDs:any[] = [];
-    let saveMorePlayers:boolean = true;
+    let fullTeamPositions:any[] = [];
+    let saveMoreIDPlayers:boolean = true;
+    let saveMorePositionPlayers: boolean = true;
 
-    const countByValue = teamsIDs.reduce((count:any, value) => {
+    const countTeamIDs = teamsIDs.reduce((count:any, value) => {
+      count[value] = (count[value] || 0) + 1;
+      return count;
+    }, {});
+
+    const teamPositions = positions.reduce((count:any, value) => {
       count[value] = (count[value] || 0) + 1;
       return count;
     }, {});
     
-    for (const value in countByValue) {
-      if (countByValue.hasOwnProperty(value)) {
-        if (countByValue[value] >= maxPlayerForTeam) {
+    for (const value in countTeamIDs) {
+      if (countTeamIDs.hasOwnProperty(value)) {
+        if (countTeamIDs[value] >= maxPlayerForTeam) {
           if(parseInt(value) === teamID){
             console.log(`El valor ${value} tiene ${maxPlayerForTeam} registros.`);
             fullTeamsIDs.push(value)
-            saveMorePlayers = false;
+            saveMoreIDPlayers = false;
           }
         }else{
-          saveMorePlayers = true;
+          saveMoreIDPlayers = true;
+        }
+      }
+    }
+
+    for (const value in teamPositions) {
+      if (teamPositions.hasOwnProperty(value)) {
+        if (teamPositions[value] >= maxAttackersForTeam) {
+          if(value === position){
+            console.log(`El valor ${value} tiene ${maxAttackersForTeam} registros.`);
+            fullTeamPositions.push(value)
+            saveMorePositionPlayers = false;
+          }
+        }else{
+          saveMorePositionPlayers = true;
         }
       }
     }
 
     return {
-      saveMorePlayers,
-      fullTeamsIDs
+      saveMoreIDPlayers,
+      fullTeamsIDs,
+      saveMorePositionPlayers,
+      fullTeamPositions
     }
   }
 
@@ -150,6 +178,13 @@ export class TeamComponent implements OnInit, OnDestroy {
     teamsIDs = existingData.map((item:Player) => item.teamID);
 
     return teamsIDs;
+  }
+
+  getTeamPositions(existingData:Player[]){
+    let positions:string[] = [];
+    positions = existingData.map((item:Player) => item.position);
+
+    return positions;
   }
 
   cleanAllState(){
