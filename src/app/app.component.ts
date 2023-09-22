@@ -10,7 +10,7 @@ import { Player } from './team/player.interface';
 export class AppComponent implements OnInit {
   title = 'fantasyFootball';
   team: any[] = [];
-  player: any;
+  player!: Player;
 
   constructor(
     private teamService: TeamService
