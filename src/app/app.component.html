@@ -10,13 +10,13 @@
           </div>
           <div>
             <div>
-              <label>Edad: </label> 33
+              <label>Edad: </label> {{ player.age }}
             </div>
             <div>
-              <label>Nacionalidad: </label> Brazil
+              <label>Nacionalidad: </label> {{ player.nationality }}
             </div>
             <div>
-              <label>Posición: </label> Atacante
+              <label>Posición: </label> {{ player.position }}
             </div>
             <button (click)="deletePlayer(player)">Eliminar</button>
           </div>
