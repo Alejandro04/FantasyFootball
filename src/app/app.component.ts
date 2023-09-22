@@ -11,6 +11,7 @@ export class AppComponent implements OnInit {
   title = 'fantasyFootball';
   team: any[] = [];
   player!: Player;
+  completeTeam: boolean = false;
 
   constructor(
     private teamService: TeamService
@@ -25,6 +26,10 @@ export class AppComponent implements OnInit {
     this.teamService.playerList$.subscribe((player) => {
       if(player){
         this.team = [ ...this.team, player ]
+      }
+
+      if(this.team.length === 16){
+        this.completeTeam = true;
       }
     });
   }
@@ -43,5 +48,12 @@ export class AppComponent implements OnInit {
 
     localStorage.clear();
     localStorage.setItem('team', JSON.stringify(this.team))
+    this.completeTeam = false;
+  }
+
+  clearTeam(){
+    localStorage.clear();
+    this.team = [];
+    this.completeTeam = false;
   }
 }

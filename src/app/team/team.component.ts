@@ -26,7 +26,9 @@ export class TeamComponent implements OnInit, OnDestroy {
   msgPositionValidation: string = "";
   msgCountValidation: string = "";
   msgHasPlayer: string = "";
-  leagueInput:string = "";
+  leagueInput: string = "";
+  msgCompleteTeam: string = "";
+  quantityPlayers: number = 0;
   leagueSubscription: Subscription = new Subscription;
   playerSubscription: Subscription = new Subscription;
   private searchLeaguesSubject = new Subject<string>();
@@ -88,12 +90,17 @@ export class TeamComponent implements OnInit, OnDestroy {
 
   savePlayer() {
     const localStorageData = localStorage.getItem('team');
-    const existingData = JSON.parse(localStorageData ? localStorageData : "");
-    const hasPlayer = existingData.find((player:Player) => player.id === this.player.id);
+    let existingData = [];
+    let hasPlayer:boolean = false;
     let newData = this.player;
 
-    if (existingData && !hasPlayer) {
-      console.log("no tenemos el jugador, guardando")
+    if(localStorageData){
+      existingData = JSON.parse(localStorageData);
+      hasPlayer = existingData.find((player: Player) => player.id === this.player.id);
+      this.quantityPlayers = existingData.length;
+    }
+
+    if (existingData.length > 0 && !hasPlayer) {
       this.teamService.addPlayer(newData);
       const getMaxPlayerForTeam = this.getMaxPlayerForTeam(existingData, newData.teamID, newData.position);
 
@@ -120,24 +127,25 @@ export class TeamComponent implements OnInit, OnDestroy {
       }
 
     } else {
-      if(hasPlayer){
+      if (hasPlayer) {
         this.playerValidate = true;
         this.msgHasPlayer = "No podemos fichar dos veces al mismo jugador";
         return
       }
 
+      this.teamService.addPlayer(newData);
       localStorage.setItem('team', JSON.stringify([newData]));
       this.savedPlayer = true;
     }
   }
-  
+
 
   getMaxPlayerForTeam(existingData: Player[], teamID: number, position: string) {
     let teamsIDs: number[] = this.getTeamsID(existingData)
     let positions: string[] = this.getTeamPositions(existingData);
     let fullTeamsIDs: any[] = [];
     let fullTeamPositions: any[] = [];
-    
+
 
     const countTeamIDs = teamsIDs.reduce((count: any, value) => {
       count[value] = (count[value] || 0) + 1;
@@ -156,10 +164,10 @@ export class TeamComponent implements OnInit, OnDestroy {
             this.msgCountValidation = "No puede guardar más jugadores de este equipo"
             fullTeamsIDs.push(value)
             playerActions.saveMoreIDPlayers = false;
-          }else{
+          } else {
             playerActions.saveMoreIDPlayers = true;
           }
-        } 
+        }
       }
     }
 
@@ -171,7 +179,7 @@ export class TeamComponent implements OnInit, OnDestroy {
             this.msgPositionValidation = `No puede guardar más ${value}`
             fullTeamPositions.push(value)
             playerActions.saveMoreDefenders = false;
-          }else{
+          } else {
             playerActions.saveMoreDefenders = true;
           }
         }
@@ -186,7 +194,7 @@ export class TeamComponent implements OnInit, OnDestroy {
             this.msgPositionValidation = `No puede guardar más ${value}`
             fullTeamPositions.push(value)
             playerActions.saveMoreMidfielder = false;
-          }else{
+          } else {
             playerActions.saveMoreMidfielder = true;
           }
         }
@@ -201,7 +209,7 @@ export class TeamComponent implements OnInit, OnDestroy {
             this.msgPositionValidation = `No puede guardar más ${value}`
             fullTeamPositions.push(value)
             playerActions.saveMoreGoalkeeper = false;
-          }else{
+          } else {
             playerActions.saveMoreGoalkeeper = true;
           }
         }
@@ -215,7 +223,7 @@ export class TeamComponent implements OnInit, OnDestroy {
             this.msgPositionValidation = `No puede guardar más ${value}`
             fullTeamPositions.push(value)
             playerActions.saveMoreAttacker = false;
-          }else{
+          } else {
             playerActions.saveMoreGoalkeeper = true;
           }
         }
@@ -227,7 +235,7 @@ export class TeamComponent implements OnInit, OnDestroy {
     const saveMoreMidfielder = playerActions.saveMoreMidfielder;
     const saveMoreGoalkeeper = playerActions.saveMoreGoalkeeper;
     const saveMoreIDPlayers = playerActions.saveMoreIDPlayers;
-    
+
     return {
       saveMoreIDPlayers,
       fullTeamsIDs,

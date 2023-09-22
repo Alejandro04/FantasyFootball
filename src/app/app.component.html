@@ -32,6 +32,13 @@
     </div>
   </div>
   <div>
-    <app-team></app-team>
+    <app-team *ngIf="!completeTeam"></app-team>
+    <div *ngIf="completeTeam">
+      <section *ngIf="completeTeam" class="completeTeamContainer">
+        <h2>Felicidades!</h2>
+        <p> Haz completado tu equipo! </p>
+        <button (click)="clearTeam()"> Borrar todo y empezar de nuevo :) </button>
+      </section>
+    </div>
   </div>
 </div>
