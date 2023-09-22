@@ -38,6 +38,13 @@
         <p> Has fichado a {{ player.name }} </p>
         <button (click)="cleanAllState()"> Fichar otro jugador </button>
       </section>
+      <section *ngIf="playerValidate" class="validatePlayerContainer">
+        <h2> Atención! </h2>
+        <p> {{ msgValidation }} </p>
+        <p> {{ msgPositionValidation }}  </p>
+        <p> {{ msgCountValidation }} </p>
+        <button (click)="cleanAllState()"> Fichar otro jugador </button>
+      </section>
     </div>
   </section>
 </div>

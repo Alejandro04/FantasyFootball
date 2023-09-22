@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { TeamService } from "./team.service";
-import { League, LeagueResponse } from "./league.interface";
-import { PlayerParam } from "./playerParams.interface";
-import { Player, PlayerResponse } from "./player.interface";
+import { League } from "./league.interface";
+import { Player } from "./player.interface";
 import { Subject, Subscription, debounceTime, distinctUntilChanged, switchMap } from "rxjs";
 
 enum TeamLimits {
@@ -50,7 +49,11 @@ export class TeamComponent implements OnInit, OnDestroy {
   showSelectedLeague: boolean = false;
   showPlayer: boolean = false;
   savedPlayer: boolean = false;
+  playerValidate: boolean = false;
   playerDataSubject = new Subject;
+  msgValidation: string = "";
+  msgPositionValidation: string = "";
+  msgCountValidation: string = "";
   leagueSubscription: Subscription = new Subscription;
   playerSubscription: Subscription = new Subscription;
   private searchLeaguesSubject = new Subject<string>();
@@ -112,7 +115,7 @@ export class TeamComponent implements OnInit, OnDestroy {
 
   savePlayer() {
     const localStorageData = localStorage.getItem('team');
-    const newData = { id: 270, name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png', age: '33', nationality: 'Brazil', position: 'Midfielder', teamName: 'Paris', teamID: 1 };
+    const newData = { id: 270, name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png', age: '33', nationality: 'Brazil', position: 'Midfielder', teamName: 'Paris', teamID: 12 };
     this.teamService.addPlayer(newData);
 
     if (localStorageData) {
@@ -120,7 +123,7 @@ export class TeamComponent implements OnInit, OnDestroy {
       const getMaxPlayerForTeam = this.getMaxPlayerForTeam(existingData, newData.teamID, newData.position);
 
       if (existingData.length > 16) {
-        console.log("máximo 16 players por equipo")
+        this.msgValidation = "máximo 16 players por equipo"
         return
       }
 
@@ -129,7 +132,8 @@ export class TeamComponent implements OnInit, OnDestroy {
         !getMaxPlayerForTeam.saveMoreDefenders ||
         !getMaxPlayerForTeam.saveMoreGoalkeeper ||
         !getMaxPlayerForTeam.saveMoreMidfielder) {
-        console.log("No puede guardar este jugador")
+        this.msgValidation = "No puede guardar este jugador"
+        this.playerValidate = true;
         return
       }
 
@@ -167,7 +171,7 @@ export class TeamComponent implements OnInit, OnDestroy {
       if (countTeamIDs.hasOwnProperty(value)) {
         if (countTeamIDs[value] >= TeamLimits.maxPlayerForTeam) {
           if (parseInt(value) === teamID) {
-            console.log(`No puede guardar más jugadores de este equipo`)
+            this.msgCountValidation = "No puede guardar más jugadores de este equipo"
             fullTeamsIDs.push(value)
             playerActions.saveMoreIDPlayers = false;
           }
@@ -182,9 +186,11 @@ export class TeamComponent implements OnInit, OnDestroy {
         if (teamPositions.hasOwnProperty(value)) {
           if (teamPositions[Position.Defender] >= TeamLimits.maxDefendersForTeam &&
             value === position) {
-            console.log(`No puede guardar más ${value}`)
+            this.msgPositionValidation = `No puede guardar más ${value}`
             fullTeamPositions.push(value)
             playerActions.saveMoreDefenders = false;
+          }else{
+            playerActions.saveMoreDefenders = true;
           }
         }
       }
@@ -195,9 +201,11 @@ export class TeamComponent implements OnInit, OnDestroy {
         if (teamPositions.hasOwnProperty(value)) {
           if (teamPositions[Position.Midfielder] >= TeamLimits.maxMidfieldersForTeam &&
             value === position) {
-            console.log(`No puede guardar más ${value}`)
+            this.msgPositionValidation = `No puede guardar más ${value}`
             fullTeamPositions.push(value)
             playerActions.saveMoreMidfielder = false;
+          }else{
+            playerActions.saveMoreMidfielder = true;
           }
         }
       }
@@ -208,9 +216,11 @@ export class TeamComponent implements OnInit, OnDestroy {
         if (teamPositions.hasOwnProperty(value)) {
           if (teamPositions[Position.Goalkeeper] >= TeamLimits.maxGoalkeepersForTeam &&
             value === position) {
-            console.log(`No puede guardar más ${value}`)
+            this.msgPositionValidation = `No puede guardar más ${value}`
             fullTeamPositions.push(value)
             playerActions.saveMoreGoalkeeper = false;
+          }else{
+            playerActions.saveMoreGoalkeeper = true;
           }
         }
       }
@@ -220,9 +230,11 @@ export class TeamComponent implements OnInit, OnDestroy {
       for (const value in teamPositions) {
         if (teamPositions.hasOwnProperty(value)) {
           if (teamPositions[Position.Attacker] >= TeamLimits.maxAttackersForTeam) {
-            console.log(`No puede guardar más ${value}`)
+            this.msgPositionValidation = `No puede guardar más ${value}`
             fullTeamPositions.push(value)
             playerActions.saveMoreAttacker = false;
+          }else{
+            playerActions.saveMoreGoalkeeper = true;
           }
         }
       }
@@ -265,6 +277,9 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.showSelectedLeague = false;
     this.selectedLeague = {} as League;
     this.showLeagues = true;
+    this.playerValidate = false;
+    this.msgPositionValidation = "";
+    this.msgCountValidation = "";
   }
 
   ngOnDestroy() {
