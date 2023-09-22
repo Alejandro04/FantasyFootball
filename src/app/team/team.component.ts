@@ -82,18 +82,69 @@ export class TeamComponent implements OnInit, OnDestroy {
 
   savePlayer() {
     const localStorageData = localStorage.getItem('team');
-    const newData = { id: 270, name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png', age: '33', nationality: 'Brazil', position: 'Atacante' };
+    const newData = { id: 270, name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png', age: '33', nationality: 'Brazil', position: 'Atacante', teamName: 'Paris', teamID: 46 };
     this.teamService.addPlayer(newData);
 
     if (localStorageData) {
       const existingData = JSON.parse(localStorageData);
-      existingData.push(newData);
-      localStorage.setItem('team', JSON.stringify(existingData));
+      const getMaxPlayerForTeam = this.getMaxPlayerForTeam(existingData, newData.teamID);
+      
+      if(!getMaxPlayerForTeam.saveMorePlayers){
+        console.log("Equipos full")
+        console.log(getMaxPlayerForTeam.fullTeamsIDs)
+        console.log("selecciona jugador de otro equipo")
+        return
+      }
+
+      if(getMaxPlayerForTeam.saveMorePlayers && Array.isArray(existingData)){  
+        existingData.push(newData);
+        localStorage.setItem('team', JSON.stringify(existingData));
+        this.savedPlayer = true;
+        return
+      }
+
     } else {
       localStorage.setItem('team', JSON.stringify([newData]));
+      this.savedPlayer = true;
+    }
+  }
+
+  getMaxPlayerForTeam(existingData:Player[], teamID:number){
+    let teamsIDs:number[] = this.getTeamsID(existingData)
+    const maxPlayerForTeam = 4;
+    let fullTeamsIDs:any[] = [];
+    let saveMorePlayers:boolean = true;
+
+    const countByValue = teamsIDs.reduce((count:any, value) => {
+      count[value] = (count[value] || 0) + 1;
+      return count;
+    }, {});
+    
+    for (const value in countByValue) {
+      if (countByValue.hasOwnProperty(value)) {
+        if (countByValue[value] >= maxPlayerForTeam) {
+          if(parseInt(value) === teamID){
+            console.log(`El valor ${value} tiene ${maxPlayerForTeam} registros.`);
+            fullTeamsIDs.push(value)
+            saveMorePlayers = false;
+          }
+        }else{
+          saveMorePlayers = true;
+        }
+      }
     }
 
-    this.savedPlayer = true;
+    return {
+      saveMorePlayers,
+      fullTeamsIDs
+    }
+  }
+
+  getTeamsID(existingData:Player[]){
+    let teamsIDs:number[] = [];
+    teamsIDs = existingData.map((item:Player) => item.teamID);
+
+    return teamsIDs;
   }
 
   cleanAllState(){

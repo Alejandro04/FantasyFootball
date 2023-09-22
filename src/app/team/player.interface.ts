@@ -36,6 +36,7 @@ export interface ApiPlayerResponse {
     photo: string,
     position: string;
     teamName: string;
+    teamID: number;
   }
   
   export interface Birth {
