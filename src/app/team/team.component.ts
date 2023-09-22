@@ -35,11 +35,11 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.searchPlayersDebounce();
   }
 
-  searchLeaguesDebounce(){
+  searchLeaguesDebounce() {
     this.leagueSubscription = this.searchLeaguesSubject
       .pipe(
         debounceTime(1000),
-        distinctUntilChanged(), 
+        distinctUntilChanged(),
         switchMap(criteria => this.teamService.searchLeague(criteria))
       )
       .subscribe(leagues => {
@@ -47,7 +47,7 @@ export class TeamComponent implements OnInit, OnDestroy {
       });
   }
 
-  searchPlayersDebounce(){
+  searchPlayersDebounce() {
     this.playerSubscription = this.searchPlayersSubject
       .pipe(
         debounceTime(1000),
@@ -82,33 +82,32 @@ export class TeamComponent implements OnInit, OnDestroy {
 
   savePlayer() {
     const localStorageData = localStorage.getItem('team');
-    const newData = { id: 270, name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png', age: '33', nationality: 'Brazil', position: 'Attacker', teamName: 'Paris', teamID: 46 };
+    const newData = { id: 270, name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png', age: '33', nationality: 'Brazil', position: 'Midfielder', teamName: 'Paris', teamID: 1 };
     this.teamService.addPlayer(newData);
 
     if (localStorageData) {
       const existingData = JSON.parse(localStorageData);
       const getMaxPlayerForTeam = this.getMaxPlayerForTeam(existingData, newData.teamID, newData.position);
-      
-      if(existingData.length > 16){
-        console.log("máximo 16 players por equipo")
-        return 
-      }
 
-      if(!getMaxPlayerForTeam.saveMoreIDPlayers || 
-        !getMaxPlayerForTeam.saveMorePositionPlayers){
-        console.log("No puede guardar este jugador")
-        console.log("Cambia jugador si ya tiene 4 del mismo equipo o elimina uno si ya tiene 16 jugadores")
+      if (existingData.length > 16) {
+        console.log("máximo 16 players por equipo")
         return
       }
 
-      if(getMaxPlayerForTeam.saveMoreIDPlayers && 
-        getMaxPlayerForTeam.saveMorePositionPlayers && 
-        Array.isArray(existingData)
-        ){  
-          existingData.push(newData);
-          localStorage.setItem('team', JSON.stringify(existingData));
-          this.savedPlayer = true;
-          return
+      if (!getMaxPlayerForTeam.saveMoreIDPlayers ||
+        !getMaxPlayerForTeam.saveMoreAttacker ||
+        !getMaxPlayerForTeam.saveMoreDefenders ||
+        !getMaxPlayerForTeam.saveMoreGoalkeeper ||
+        !getMaxPlayerForTeam.saveMoreMidfielder) {
+        console.log("No puede guardar este jugador")
+        return
+      }
+
+      if (Array.isArray(existingData)) {
+        existingData.push(newData);
+        localStorage.setItem('team', JSON.stringify(existingData));
+        this.savedPlayer = true;
+        return
       }
 
     } else {
@@ -117,50 +116,93 @@ export class TeamComponent implements OnInit, OnDestroy {
     }
   }
 
-  getMaxPlayerForTeam(existingData:Player[], teamID:number, position:string){
-    let teamsIDs:number[] = this.getTeamsID(existingData)
+  getMaxPlayerForTeam(existingData: Player[], teamID: number, position: string) {
+    let teamsIDs: number[] = this.getTeamsID(existingData)
     let positions: string[] = this.getTeamPositions(existingData);
     const maxPlayerForTeam = 4;
     const maxAttackersForTeam = 2;
-    let fullTeamsIDs:any[] = [];
-    let fullTeamPositions:any[] = [];
-    let saveMoreIDPlayers:boolean = true;
-    let saveMorePositionPlayers: boolean = true;
+    const maxDefendersForTeam = 4;
+    const maxMidfieldersForTeam = 4;
+    const maxGoalkeepersForTeam = 2;
+    let fullTeamsIDs: any[] = [];
+    let fullTeamPositions: any[] = [];
+    let saveMoreIDPlayers: boolean = true;
+    let saveMoreDefenders: boolean = true;
+    let saveMoreMidfielder: boolean = true;
+    let saveMoreGoalkeeper: boolean = true;
+    let saveMoreAttacker: boolean = true;
 
-    const countTeamIDs = teamsIDs.reduce((count:any, value) => {
+    const countTeamIDs = teamsIDs.reduce((count: any, value) => {
       count[value] = (count[value] || 0) + 1;
       return count;
     }, {});
 
-    const teamPositions = positions.reduce((count:any, value) => {
+    const teamPositions = positions.reduce((count: any, value) => {
       count[value] = (count[value] || 0) + 1;
       return count;
     }, {});
-    
+
     for (const value in countTeamIDs) {
       if (countTeamIDs.hasOwnProperty(value)) {
         if (countTeamIDs[value] >= maxPlayerForTeam) {
-          if(parseInt(value) === teamID){
-            console.log(`El valor ${value} tiene ${maxPlayerForTeam} registros.`);
+          if (parseInt(value) === teamID) {
+            console.log(`No puede guardar más jugadores de este equipo`)
             fullTeamsIDs.push(value)
             saveMoreIDPlayers = false;
           }
-        }else{
+        } else {
           saveMoreIDPlayers = true;
         }
       }
     }
 
-    for (const value in teamPositions) {
-      if (teamPositions.hasOwnProperty(value)) {
-        if (teamPositions[value] >= maxAttackersForTeam) {
-          if(value === position){
-            console.log(`El valor ${value} tiene ${maxAttackersForTeam} registros.`);
+    if (position === "Defender") {
+      for (const value in teamPositions) {
+        if (teamPositions.hasOwnProperty(value)) {
+          if (teamPositions['Defender'] >= maxDefendersForTeam &&
+            value === position) {
+            console.log(`No puede guardar más ${value}`)
             fullTeamPositions.push(value)
-            saveMorePositionPlayers = false;
+            saveMoreDefenders = false;
           }
-        }else{
-          saveMorePositionPlayers = true;
+        }
+      }
+    }
+
+    if (position === "Midfielder") {
+      for (const value in teamPositions) {
+        if (teamPositions.hasOwnProperty(value)) {
+          if (teamPositions['Midfielder'] >= maxMidfieldersForTeam &&
+            value === position) {
+            console.log(`No puede guardar más ${value}`)
+            fullTeamPositions.push(value)
+            saveMoreMidfielder = false;
+          }
+        }
+      }
+    }
+
+    if (position === "Goalkeeper") {
+      for (const value in teamPositions) {
+        if (teamPositions.hasOwnProperty(value)) {
+          if (teamPositions['Goalkeeper'] >= maxGoalkeepersForTeam &&
+            value === position) {
+            console.log(`No puede guardar más ${value}`)
+            fullTeamPositions.push(value)
+            saveMoreGoalkeeper = false;
+          }
+        }
+      }
+    }
+
+    if (position === "Attacker") {
+      for (const value in teamPositions) {
+        if (teamPositions.hasOwnProperty(value)) {
+          if (teamPositions['Attacker'] >= maxAttackersForTeam) {
+            console.log(`No puede guardar más ${value}`)
+            fullTeamPositions.push(value)
+            saveMoreAttacker = false;
+          }
         }
       }
     }
@@ -168,26 +210,29 @@ export class TeamComponent implements OnInit, OnDestroy {
     return {
       saveMoreIDPlayers,
       fullTeamsIDs,
-      saveMorePositionPlayers,
+      saveMoreDefenders,
+      saveMoreMidfielder,
+      saveMoreGoalkeeper,
+      saveMoreAttacker,
       fullTeamPositions
     }
   }
 
-  getTeamsID(existingData:Player[]){
-    let teamsIDs:number[] = [];
-    teamsIDs = existingData.map((item:Player) => item.teamID);
+  getTeamsID(existingData: Player[]) {
+    let teamsIDs: number[] = [];
+    teamsIDs = existingData.map((item: Player) => item.teamID);
 
     return teamsIDs;
   }
 
-  getTeamPositions(existingData:Player[]){
-    let positions:string[] = [];
-    positions = existingData.map((item:Player) => item.position);
+  getTeamPositions(existingData: Player[]) {
+    let positions: string[] = [];
+    positions = existingData.map((item: Player) => item.position);
 
     return positions;
   }
 
-  cleanAllState(){
+  cleanAllState() {
     this.showPlayer = false;
     this.savedPlayer = false;
     this.showSelectedLeague = false;
@@ -195,7 +240,7 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.showLeagues = true;
   }
 
-  ngOnDestroy() { 
+  ngOnDestroy() {
     this.leagueSubscription.unsubscribe();
     this.playerSubscription.unsubscribe();
   }
