@@ -1,7 +1,7 @@
 <div class="content">
   <section class="leagueContainer">
     <div>
-      <input placeholder="buscar liga" (keyup)="searchLeagues($event)">
+      <input [(ngModel)]="leagueInput" placeholder="buscar liga" (keyup)="searchLeagues($event)">
       <div class="leagueItemContainer" *ngIf="showLeagues">
         <ul *ngFor="let league of leagues">
           <li (click)="selectLeague(league)">

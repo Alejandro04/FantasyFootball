@@ -26,6 +26,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   msgPositionValidation: string = "";
   msgCountValidation: string = "";
   msgHasPlayer: string = "";
+  leagueInput:string = "";
   leagueSubscription: Subscription = new Subscription;
   playerSubscription: Subscription = new Subscription;
   private searchLeaguesSubject = new Subject<string>();
@@ -66,9 +67,10 @@ export class TeamComponent implements OnInit, OnDestroy {
   }
 
   searchLeagues(event: Event) {
+    this.showLeagues = true;
     const element = event.target as HTMLSelectElement;
     const criteria = element.value;
-    this.searchLeaguesSubject.next(criteria);
+    this.searchLeaguesSubject.next(criteria);;
   }
 
   searchPlayers(event: Event) {
@@ -260,6 +262,9 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.playerValidate = false;
     this.msgPositionValidation = "";
     this.msgCountValidation = "";
+    this.showLeagues = false;
+    this.leagues = [];
+    this.leagueInput = "";
   }
 
   ngOnDestroy() {
