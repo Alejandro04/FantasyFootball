@@ -5,6 +5,7 @@ import { Player } from "./player.interface";
 import { Subject, Subscription, debounceTime, distinctUntilChanged, switchMap } from "rxjs";
 import { TeamLimits, Position } from './enums';
 import { playerActions } from './playerAction.interface'
+import { SpinnerService } from '../spinnerService';
 
 @Component({
   selector: 'app-team',
@@ -35,6 +36,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   private searchPlayersSubject = new Subject<string>();
 
   constructor(
+    public spinnerService: SpinnerService ,
     private teamService: TeamService
   ) { }
 
@@ -46,7 +48,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   searchLeaguesDebounce() {
     this.leagueSubscription = this.searchLeaguesSubject
       .pipe(
-        debounceTime(1000),
+        debounceTime(2000),
         distinctUntilChanged(),
         switchMap(criteria => this.teamService.searchLeague(criteria))
       )
@@ -58,7 +60,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   searchPlayersDebounce() {
     this.playerSubscription = this.searchPlayersSubject
       .pipe(
-        debounceTime(1000),
+        debounceTime(2000),
         distinctUntilChanged(),
         switchMap(criteria => this.teamService.searchPlayer({ player: criteria, leagueID: this.selectedLeagueID })) // Realiza la búsqueda
       )

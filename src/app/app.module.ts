@@ -6,6 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TeamComponent } from './team/team.component';
 import { FormsModule } from '@angular/forms';
 import { ApiInterceptor } from './interceptor';
+import { SpinnerService } from './spinnerService';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ApiInterceptor } from './interceptor';
     FormsModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
+    SpinnerService
   ],
   bootstrap: [AppComponent]
 })
