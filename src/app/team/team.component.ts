@@ -3,37 +3,8 @@ import { TeamService } from "./team.service";
 import { League } from "./league.interface";
 import { Player } from "./player.interface";
 import { Subject, Subscription, debounceTime, distinctUntilChanged, switchMap } from "rxjs";
-
-enum TeamLimits {
-  maxPlayerForTeam = 4,
-  maxAttackersForTeam = 2,
-  maxDefendersForTeam = 4,
-  maxMidfieldersForTeam = 4,
-  maxGoalkeepersForTeam = 2,
-}
-
-enum Position {
-  Defender = "Defender",
-  Attacker = "Attacker",
-  Midfielder = "Midfielder",
-  Goalkeeper = "Goalkeeper", 
-}
-
-interface PlayerActions {
-  saveMoreIDPlayers: boolean;
-  saveMoreDefenders: boolean;
-  saveMoreMidfielder: boolean;
-  saveMoreGoalkeeper: boolean;
-  saveMoreAttacker: boolean;
-}
-
-const playerActions: PlayerActions = {
-  saveMoreIDPlayers: true,
-  saveMoreDefenders: true,
-  saveMoreMidfielder: true,
-  saveMoreGoalkeeper: true,
-  saveMoreAttacker: true,
-};
+import { TeamLimits, Position } from './enums';
+import { playerActions } from './playerAction.interface'
 
 @Component({
   selector: 'app-team',
@@ -174,10 +145,10 @@ export class TeamComponent implements OnInit, OnDestroy {
             this.msgCountValidation = "No puede guardar más jugadores de este equipo"
             fullTeamsIDs.push(value)
             playerActions.saveMoreIDPlayers = false;
+          }else{
+            playerActions.saveMoreIDPlayers = true;
           }
-        } else {
-          playerActions.saveMoreIDPlayers = true;
-        }
+        } 
       }
     }
 
