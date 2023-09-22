@@ -59,7 +59,6 @@ export class TeamComponent implements OnInit, OnDestroy {
         switchMap(criteria => this.teamService.searchPlayer({ player: criteria, leagueID: this.selectedLeagueID })) // Realiza la búsqueda
       )
       .subscribe(players => {
-        console.log(players[0])
         this.player = players[0];
         this.showPlayer = true;
       });
@@ -86,7 +85,7 @@ export class TeamComponent implements OnInit, OnDestroy {
 
   savePlayer() {
     const localStorageData = localStorage.getItem('team');
-    const newData = { id: 270, name: 'neymar', photo: 'https://media.api-sports.io/football/players/276.png', age: '33', nationality: 'Brazil', position: 'Midfielder', teamName: 'Paris', teamID: 12 };
+    const newData = this.player;
     this.teamService.addPlayer(newData);
 
     if (localStorageData) {
@@ -120,6 +119,7 @@ export class TeamComponent implements OnInit, OnDestroy {
       this.savedPlayer = true;
     }
   }
+  
 
   getMaxPlayerForTeam(existingData: Player[], teamID: number, position: string) {
     let teamsIDs: number[] = this.getTeamsID(existingData)

@@ -15,7 +15,7 @@
       </div>
     </div>
     <div>
-      <input placeholder="buscar jugador" (keyup)="searchPlayers($event)">
+      <input *ngIf="showSelectedLeague" placeholder="buscar jugador" (keyup)="searchPlayers($event)">
     </div>
   </section>
   
