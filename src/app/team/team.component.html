@@ -54,6 +54,10 @@
         <h2>Jugador no encontrado :(</h2>
         <button (click)="cleanAllState()"> Intente de nuevo </button>
       </section>
+      <section *ngIf="leagueNotFound" class="playerNotFound">
+        <h2>Liga no encontrada :(</h2>
+        <button (click)="cleanAllState()"> Intente de nuevo </button>
+      </section>
     </div>
   </section>
 </div>
