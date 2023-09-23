@@ -45,7 +45,7 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
   searchLeaguesDebounce() {
     this.leagueSubscription = this.searchLeaguesSubject
       .pipe(
-        debounceTime(2000),
+        debounceTime(1000),
         distinctUntilChanged(),
         switchMap(criteria => this.teamService.searchLeague(criteria))
       )
@@ -62,7 +62,7 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
   searchPlayersDebounce() {
     this.playerSubscription = this.searchPlayersSubject
       .pipe(
-        debounceTime(2000),
+        debounceTime(1000),
         distinctUntilChanged(),
         switchMap(criteria => this.teamService.searchPlayer({ player: criteria, leagueID: this.selectedLeagueID })) // Realiza la búsqueda
       )
@@ -109,8 +109,12 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
     this.showLeagues = false;
     this.leagues = [];
     this.leagueInput = "";
-    this.playerNotFound = false;
     this.leagueNotFound = false;
+  }
+
+  cleanPlayerState(){
+    this.playerNotFound = false;
+    this.playerValidate = false;
   }
 
   ngOnDestroy() {
