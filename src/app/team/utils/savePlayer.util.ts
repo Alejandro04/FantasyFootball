@@ -9,6 +9,8 @@ export class UtilSavePlayer {
   playerValidate: boolean = false;
   savedPlayer: boolean = false;
   msgHasPlayer: string = "";
+  msgCountValidation: string = "";
+  msgPositionValidation: string = "";
       
   constructor(
     public teamService: TeamService
@@ -70,9 +72,6 @@ export class UtilSavePlayer {
     let positions: string[] = this.getTeamPositions(existingData);
     let fullTeamsIDs: any[] = [];
     let fullTeamPositions: any[] = [];
-    let msgCountValidation: string = "";
-    let msgPositionValidation: string = "";
-
 
     const countTeamIDs = teamsIDs.reduce((count: any, value) => {
       count[value] = (count[value] || 0) + 1;
@@ -88,7 +87,7 @@ export class UtilSavePlayer {
       if (countTeamIDs.hasOwnProperty(value)) {
         if (countTeamIDs[value] >= TeamLimits.maxPlayerForTeam) {
           if (parseInt(value) === teamID) {
-            msgCountValidation = "No puede guardar más jugadores de este equipo"
+            this.msgCountValidation = "No puede guardar más jugadores de este equipo"
             fullTeamsIDs.push(value)
             playerActions.saveMoreIDPlayers = false;
           } else {
@@ -103,7 +102,7 @@ export class UtilSavePlayer {
         if (teamPositions.hasOwnProperty(value)) {
           if (teamPositions[Position.Defender] >= TeamLimits.maxDefendersForTeam &&
             value === position) {
-            msgPositionValidation = `No puede guardar más ${value}`
+            this.msgPositionValidation = `No puede guardar más ${value}`
             fullTeamPositions.push(value)
             playerActions.saveMoreDefenders = false;
           } else {
@@ -118,7 +117,7 @@ export class UtilSavePlayer {
         if (teamPositions.hasOwnProperty(value)) {
           if (teamPositions[Position.Midfielder] >= TeamLimits.maxMidfieldersForTeam &&
             value === position) {
-            msgPositionValidation = `No puede guardar más ${value}`
+            this.msgPositionValidation = `No puede guardar más ${value}`
             fullTeamPositions.push(value)
             playerActions.saveMoreMidfielder = false;
           } else {
@@ -133,7 +132,7 @@ export class UtilSavePlayer {
         if (teamPositions.hasOwnProperty(value)) {
           if (teamPositions[Position.Goalkeeper] >= TeamLimits.maxGoalkeepersForTeam &&
             value === position) {
-            msgPositionValidation = `No puede guardar más ${value}`
+            this.msgPositionValidation = `No puede guardar más ${value}`
             fullTeamPositions.push(value)
             playerActions.saveMoreGoalkeeper = false;
           } else {
@@ -147,7 +146,7 @@ export class UtilSavePlayer {
       for (const value in teamPositions) {
         if (teamPositions.hasOwnProperty(value)) {
           if (teamPositions[Position.Attacker] >= TeamLimits.maxAttackersForTeam) {
-            msgPositionValidation = `No puede guardar más ${value}`
+            this.msgPositionValidation = `No puede guardar más ${value}`
             fullTeamPositions.push(value)
             playerActions.saveMoreAttacker = false;
           } else {
@@ -170,9 +169,7 @@ export class UtilSavePlayer {
       saveMoreMidfielder,
       saveMoreGoalkeeper,
       saveMoreAttacker,
-      fullTeamPositions,
-      msgCountValidation,
-      msgPositionValidation
+      fullTeamPositions
     }
   }
 

@@ -20,8 +20,6 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
   showSelectedLeague: boolean = false;
   showPlayer: boolean = false;
   playerDataSubject = new Subject;
-  msgPositionValidation: string = "";
-  msgCountValidation: string = "";
   leagueInput: string = "";
   msgCompleteTeam: string = "";
   playerNotFound: boolean = false;
