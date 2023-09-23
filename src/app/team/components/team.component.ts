@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { TeamService } from "./team.service";
-import { League } from "./league.interface";
-import { Player } from "./player.interface";
+import { TeamService } from "../services/team.service";
+import { League } from "../interfaces/league.interface";
+import { Player } from "../interfaces/player.interface";
 import { Subject, Subscription, debounceTime, distinctUntilChanged, switchMap } from "rxjs";
-import { TeamLimits, Position } from './enums';
-import { playerActions } from './playerAction.interface'
-import { SpinnerService } from '../spinnerService';
+import { TeamLimits, Position } from '../enums/enums';
+import { playerActions } from '../interfaces/playerAction.interface'
+import { SpinnerService } from '../services/spinnerService';
 
 @Component({
   selector: 'app-team',
@@ -115,7 +115,6 @@ export class TeamComponent implements OnInit, OnDestroy {
     }
 
     if (existingData.length > 0 && !hasPlayer) {
-      this.teamService.addPlayer(newData);
       const getMaxPlayerForTeam = this.getMaxPlayerForTeam(existingData, newData.teamID, newData.position);
 
       if (existingData.length > 16) {
@@ -134,6 +133,7 @@ export class TeamComponent implements OnInit, OnDestroy {
       }
 
       if (Array.isArray(existingData)) {
+        this.teamService.addPlayer(newData);
         existingData.push(newData);
         localStorage.setItem('team', JSON.stringify(existingData));
         this.savedPlayer = true;
@@ -238,7 +238,7 @@ export class TeamComponent implements OnInit, OnDestroy {
             fullTeamPositions.push(value)
             playerActions.saveMoreAttacker = false;
           } else {
-            playerActions.saveMoreGoalkeeper = true;
+            playerActions.saveMoreAttacker = true;
           }
         }
       }

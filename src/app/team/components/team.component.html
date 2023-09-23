@@ -5,7 +5,7 @@
 <div class="content">
   <section class="leagueContainer">
     <div>
-      <input [(ngModel)]="leagueInput" placeholder="buscar liga" (keyup)="searchLeagues($event)">
+      <input [(ngModel)]="leagueInput" placeholder="buscar liga" (keydown)="searchLeagues($event)">
       <div class="leagueItemContainer" *ngIf="showLeagues">
         <ul *ngFor="let league of leagues">
           <li (click)="selectLeague(league)">
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div>
-      <input *ngIf="showSelectedLeague" placeholder="buscar jugador" (keyup)="searchPlayers($event)">
+      <input *ngIf="showSelectedLeague" placeholder="buscar jugador" (keydown)="searchPlayers($event)">
     </div>
   </section>
   

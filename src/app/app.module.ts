@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TeamComponent } from './team/team.component';
+import { TeamComponent } from './team/components/team.component';
 import { FormsModule } from '@angular/forms';
-import { ApiInterceptor } from './interceptor';
-import { SpinnerService } from './spinnerService';
+import { ApiInterceptor } from './team/interceptors/interceptor';
+import { SpinnerService } from './team/services/spinnerService';
 
 @NgModule({
   declarations: [

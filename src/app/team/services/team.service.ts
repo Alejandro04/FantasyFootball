@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
-import { ApiLeagueResponse, League, LeagueResponse } from './league.interface';
-import { PlayerParam } from './playerParams.interface';
-import { ApiPlayerResponse, PlayerResponse } from './player.interface';
+import { map } from 'rxjs/operators';
+import { ApiLeagueResponse, League, LeagueResponse } from '../interfaces/league.interface';
+import { PlayerParam } from '../interfaces/playerParams.interface';
+import { ApiPlayerResponse, PlayerResponse } from '../interfaces/player.interface';
 import { Injectable } from '@angular/core';
 
 @Injectable({

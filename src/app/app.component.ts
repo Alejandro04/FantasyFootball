@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TeamService } from './team/team.service';
-import { Player } from './team/player.interface';
+import { TeamService } from './team/services/team.service';
+import { Player } from './team/interfaces/player.interface';
 
 @Component({
   selector: 'app-root',
