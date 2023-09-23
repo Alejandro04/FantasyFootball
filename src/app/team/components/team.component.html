@@ -3,61 +3,90 @@
 </div>
 
 <div class="content">
-  <section class="leagueContainer">
-    <div>
-      <input [(ngModel)]="leagueInput" placeholder="buscar liga" (keydown)="searchLeagues($event)">
-      <div class="leagueItemContainer" *ngIf="showLeagues">
-        <ul *ngFor="let league of leagues">
-          <li (click)="selectLeague(league)">
-            {{ league.name }} {{ league.country }}
+
+  <div class="headActions">
+    <button (click)="showTab('player')">Buscar jugadores</button>
+    <button (click)="showTab('coach')">Buscar coach</button>
+  </div>
+
+  <div *ngIf="coachTab">
+    <section>
+      <input placeholder="buscar coach" (keydown)="searchCoach($event)">
+      
+      <div class="leagueItemContainer" *ngIf="showCoachs">
+        <ul *ngFor="let coach of coachs">
+          <li (click)="selectCoach(coach)">
+            {{ coach.name }}
           </li>
-        </ul>
+        </ul>  
       </div>
-      <div *ngIf="showSelectedLeague">
-        <label>Liga seleccionada: </label>
-        {{ selectedLeague.name }} de {{ selectedLeague.country }}
+
+      <img src="{{ coach?.photo }}" alt="{{ coach?.name }}" />
+      <div class="playerDetails">
+        <div> <label>Nombre: </label> {{ coach?.name }} </div>
+        <div> <label>Edad: </label> {{ coach?.age }} </div>
+        <div> <label>Nacionalidad: </label> {{ coach?.nationality }} </div>
+        <button (click)="saveCoach(coach)"> Contratar </button>
       </div>
-    </div>
-    <div>
-      <input *ngIf="showSelectedLeague" placeholder="buscar jugador" (keydown)="searchPlayers($event)">
-    </div>
-  </section>
-  
-  
-  <section class="playerContainer">
-    <div>
-      <section class="selectPlayerContainer" *ngIf="showPlayer">
-        <img src="{{ player.photo }}" alt="{{ player.name }}" />
-        <div class="playerDetails">
-          <div> <label>Nombre: </label> {{ player.name }} </div>
-          <div> <label>Edad: </label> {{ player.age }} </div>
-          <div> <label>Nacionalidad: </label> {{ player.nationality }} </div>
-          <div> <label>Posición: </label> {{ player.position }} </div>
-          <div> <label>Equipo: </label> {{ player.teamName }} </div>
-          <button (click)="savePlayer(player)" *ngIf="!savedPlayer"> Fichar </button>
+    </section>
+  </div>
+  <div *ngIf="playerTab">
+    <section class="leagueContainer">
+      <div>
+        <input [(ngModel)]="leagueInput" placeholder="buscar liga" (keydown)="searchLeagues($event)">
+        <div class="leagueItemContainer" *ngIf="showLeagues">
+          <ul *ngFor="let league of leagues">
+            <li (click)="selectLeague(league)">
+              {{ league.name }} {{ league.country }}
+            </li>
+          </ul>
         </div>
-      </section>
-      <section *ngIf="savedPlayer" class="savedPlayerContainer">
-        <h2>Felicidades!</h2>
-        <p> Has fichado a {{ player.name }} </p>
-        <button (click)="cleanAllState()"> Fichar otro jugador </button>
-      </section>
-      <section *ngIf="playerValidate" class="validatePlayerContainer">
-        <h2> Atención! </h2>
-        <p> {{ msgValidation }} </p>
-        <p> {{ msgPositionValidation }}  </p>
-        <p> {{ msgCountValidation }} </p>
-        <p> {{ msgHasPlayer }} </p>
-        <button (click)="cleanAllState()"> Fichar otro jugador </button>
-      </section>
-      <section *ngIf="playerNotFound" class="playerNotFound">
-        <h2>Jugador no encontrado :(</h2>
-        <button (click)="cleanPlayerState()"> Intente de nuevo </button>
-      </section>
-      <section *ngIf="leagueNotFound" class="playerNotFound">
-        <h2>Liga no encontrada :(</h2>
-        <button (click)="cleanAllState()"> Intente de nuevo </button>
-      </section>
-    </div>
-  </section>
+        <div *ngIf="showSelectedLeague">
+          <label>Liga seleccionada: </label>
+          {{ selectedLeague.name }} de {{ selectedLeague.country }}
+        </div>
+      </div>
+      <div>
+        <input *ngIf="showSelectedLeague" placeholder="buscar jugador" (keydown)="searchPlayers($event)">
+      </div>
+    </section>
+
+
+    <section class="playerContainer">
+      <div>
+        <section class="selectPlayerContainer" *ngIf="showPlayer">
+          <img src="{{ player.photo }}" alt="{{ player.name }}" />
+          <div class="playerDetails">
+            <div> <label>Nombre: </label> {{ player.name }} </div>
+            <div> <label>Edad: </label> {{ player.age }} </div>
+            <div> <label>Nacionalidad: </label> {{ player.nationality }} </div>
+            <div> <label>Posición: </label> {{ player.position }} </div>
+            <div> <label>Equipo: </label> {{ player.teamName }} </div>
+            <button (click)="savePlayer(player)" *ngIf="!savedPlayer"> Fichar </button>
+          </div>
+        </section>
+        <section *ngIf="savedPlayer" class="savedPlayerContainer">
+          <h2>Felicidades!</h2>
+          <p> Has fichado a {{ player.name }} </p>
+          <button (click)="cleanAllState()"> Fichar otro jugador </button>
+        </section>
+        <section *ngIf="playerValidate" class="validatePlayerContainer">
+          <h2> Atención! </h2>
+          <p> {{ msgValidation }} </p>
+          <p> {{ msgPositionValidation }} </p>
+          <p> {{ msgCountValidation }} </p>
+          <p> {{ msgHasPlayer }} </p>
+          <button (click)="cleanAllState()"> Fichar otro jugador </button>
+        </section>
+        <section *ngIf="playerNotFound" class="playerNotFound">
+          <h2>Jugador no encontrado :(</h2>
+          <button (click)="cleanPlayerState()"> Intente de nuevo </button>
+        </section>
+        <section *ngIf="leagueNotFound" class="playerNotFound">
+          <h2>Liga no encontrada :(</h2>
+          <button (click)="cleanAllState()"> Intente de nuevo </button>
+        </section>
+      </div>
+    </section>
+  </div>
 </div>

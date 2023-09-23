@@ -5,6 +5,7 @@ import { ApiLeagueResponse, League, LeagueResponse } from '../interfaces/league.
 import { PlayerParam } from '../interfaces/playerParams.interface';
 import { ApiPlayerResponse, PlayerResponse } from '../interfaces/player.interface';
 import { Injectable } from '@angular/core';
+import { Coach, ApiCoachResponse } from '../interfaces/coach.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,18 @@ export class TeamService {
     private http: HttpClient
   ) { }
 
+  searchCoach(param: string): Observable<any[]>{
+    return this.http.get<ApiCoachResponse>('./assets/coach.json').pipe(
+      map((apiresponse) => {
+        return apiresponse.response
+      }),
+      catchError((error) => {
+        console.error('Error en la solicitud HTTP:', error);
+        return of([]);
+      })
+    );
+  }
+
   searchLeague(param: string): Observable<any[]> {
     //return this.http.get<ApiLeagueResponse>(`${this.leagueApiUrl}?search=${param}`).pipe(
     return this.http.get<ApiLeagueResponse>('./assets/league.json').pipe(
@@ -29,7 +42,6 @@ export class TeamService {
       }))),
       catchError((error) => {
         console.error('Error en la solicitud HTTP:', error);
-        // Devolver un observable vacío para que el flujo de datos continúe
         return of([]);
       })
     );
@@ -40,7 +52,7 @@ export class TeamService {
     const player = params.player;
 
     //return this.http.get<ApiPlayerResponse>(`${this.playerApiUrl}?league=${leagueID}&search=${player}`).pipe(
-    return this.http.get<ApiPlayerResponse>('./assedts/player.json').pipe(
+    return this.http.get<ApiPlayerResponse>('./assets/player.json').pipe(
       map((apiresponse) => apiresponse.response.map((player) => ({
         id: player.player.id,
         name: player.player.name,
