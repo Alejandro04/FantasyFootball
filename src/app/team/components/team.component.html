@@ -6,40 +6,11 @@
 
   <div class="headActions">
     <button (click)="showTab('player')">Buscar jugadores</button>
-    <button (click)="showTab('coach')"> {{ coachTabName }} </button>
+    <button (click)="showTab('coach')"> Coach </button>
   </div>
 
   <div *ngIf="coachTab">
-    <section class="coachContainer">
-      <input [(ngModel)]="coachInput" placeholder="buscar coach" (keydown)="searchCoach($event)">
-
-      <div class="leagueItemContainer" *ngIf="showCoachs">
-        <ul *ngFor="let coach of coachs">
-          <li (click)="selectCoach(coach)">
-            {{ coach.name }}
-          </li>
-        </ul>
-      </div>
-
-      <div *ngIf="showCoach" class="selectCoachContainer">
-        <img src="{{ coach?.photo }}" alt="{{ coach?.name }}" />
-        <div class="playerDetails">
-          <div> <label>Nombre: </label> {{ coach?.name }} </div>
-          <div> <label>Edad: </label> {{ coach?.age }} </div>
-          <div> <label>Nacionalidad: </label> {{ coach?.nationality }} </div>
-          <button *ngIf="!savedCoach" (click)="saveCoach(coach)"> Contratar </button>
-        </div>
-      </div>
-      <section *ngIf="msgValidationCoach" class="validatePlayerContainer">
-        <h2> Atención! </h2>
-        <p> No puede contratar más técnicos </p>
-        <button (click)="deleteCoach()"> Despedir </button>
-      </section>
-      <section *ngIf="savedCoach" class="savedPlayerContainer">
-        <h2>Felicidades!</h2>
-        <p> Has contratado a {{ coach.name }} </p>
-      </section>
-    </section>
+    <app-coach></app-coach>
   </div>
 
   <div *ngIf="playerTab">

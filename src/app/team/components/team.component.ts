@@ -5,7 +5,6 @@ import { Player } from "../interfaces/player.interface";
 import { Subject, Subscription, debounceTime, distinctUntilChanged, switchMap } from "rxjs";
 import { SpinnerService } from '../services/spinnerService';
 import { UtilSavePlayer } from "../utils/savePlayer.util";
-import { Coach } from "../interfaces/coach.interface";
 
 @Component({
   selector: 'app-team',
@@ -14,35 +13,23 @@ import { Coach } from "../interfaces/coach.interface";
 })
 export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
   leagues: League[] = [];
-  coachs: Coach[] = [];
   player!: Player;
   selectedLeagueID: number = 0;
   selectedLeague!: League;
   showLeagues: boolean = true;
   showSelectedLeague: boolean = false;
   showPlayer: boolean = false;
-  showCoachs: boolean = false;
-  showCoach: boolean = false;
   playerDataSubject = new Subject;
   leagueInput: string = "";
   msgCompleteTeam: string = "";
   playerNotFound: boolean = false;
   leagueNotFound: boolean = false;
-  coachNotFound: boolean = false;
   playerTab: boolean = true;
   coachTab: boolean = false;
-  msgValidationCoach: boolean = false;
-  coachInput: string = "";
-  savedCoach: boolean = false;
-  coachTabName: string = "Buscar coach"
   leagueSubscription: Subscription = new Subscription;
   playerSubscription: Subscription = new Subscription;
-  coachSubscription: Subscription = new Subscription;
   private searchLeaguesSubject = new Subject<string>();
   private searchPlayersSubject = new Subject<string>();
-  private searchCoachSubject = new Subject<string>();
-
-  coach:any;
 
   constructor(
     public spinnerService: SpinnerService ,
@@ -55,7 +42,6 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
   ngOnInit() {
     this.searchLeaguesDebounce();
     this.searchPlayersDebounce();
-    this.searchCoachDebounce();
   }
 
   searchLeaguesDebounce() {
@@ -93,24 +79,6 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
       });
   }
 
-  searchCoachDebounce() {
-    this.coachSubscription = this.searchCoachSubject
-      .pipe(
-        debounceTime(1000),
-        distinctUntilChanged(),
-        switchMap(criteria => this.teamService.searchCoach(criteria))
-      )
-      .subscribe(coachs => {
-        if(coachs.length > 0){
-          this.coachs = coachs;
-          this.coachNotFound = false;
-          return
-        }
-
-        this.coachNotFound = true;
-      });
-  }
-
   searchLeagues(event: Event) {
     this.showLeagues = true;
     const element = event.target as HTMLSelectElement;
@@ -124,25 +92,11 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
     this.searchPlayersSubject.next(criteria);
   }
 
-  searchCoach(event: Event){
-    this.showCoachs = true;
-    const element = event.target as HTMLSelectElement;
-    const criteria = element.value;
-    this.savedCoach = false;
-    this.searchCoachSubject.next(criteria);
-  }
-
   selectLeague(league: League) {
     this.selectedLeague = league;
     this.selectedLeagueID = league.id;
     this.showLeagues = false;
     this.showSelectedLeague = true;
-  }
-
-  selectCoach(coach: Coach){
-    this.showCoachs = false;
-    this.showCoach = true;
-    this.coach = coach;
   }
 
   showTab(option: string){
@@ -155,27 +109,7 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
     this.playerTab = false;
     this.coachTab = true;
   }
-
-  saveCoach(coach: Coach){
-    const localStorageData = localStorage.getItem("coach")
-    if(localStorageData) {
-      this.msgValidationCoach = true;
-      return
-    }
-
-    this.savedCoach = true;
-    this.coachTabName = "Ver coach"
-    localStorage.setItem("coach", JSON.stringify(coach))
-  }
-
-  deleteCoach(){
-    this.msgValidationCoach = false;
-    this.showCoach = false;
-    this.coachInput = "";
-    this.coachTabName = "Buscar coach"
-    localStorage.removeItem('coach')
-  }
-
+  
   cleanAllState() {
     this.showPlayer = false;
     this.savedPlayer = false;
