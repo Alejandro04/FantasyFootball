@@ -25,11 +25,11 @@ Run `npm run test:watch` to execute the unit tests via **JEST**
 We have the dashboard, we can see in the sidebar the players list and, 
 in the content two inputs search (players and coach).
 
-![Dashboard](./src/assets/2.jpg)
+![Dashboard](./src/assets/2.png)
 
 We can see a selected player after of searched.
 
-![Dashboard](./src/assets/3.jpg)
+![Dashboard](./src/assets/3.png)
 
 We can see a selected coach after of searched.
 
