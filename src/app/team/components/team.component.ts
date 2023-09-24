@@ -55,9 +55,10 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
         if(leagues.length > 0){
           this.leagues = leagues;
           this.leagueNotFound = false;
-        }else{
-          this.leagueNotFound = true;
+          return
         }
+
+        this.leagueNotFound = true;
       });
   }
 
@@ -73,9 +74,10 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
           this.player = players[0];
           this.playerNotFound = false;
           this.showPlayer = true;
-        }else{
-          this.playerNotFound = true;
+          return
         }
+
+        this.playerNotFound = true;
       });
   }
 
