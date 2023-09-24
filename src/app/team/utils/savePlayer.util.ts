@@ -100,9 +100,8 @@ export class UtilSavePlayer {
     if (position === Position.Defender) {
       for (const value in teamPositions) {
         if (teamPositions.hasOwnProperty(value)) {
-          if (teamPositions[Position.Defender] >= TeamLimits.maxDefendersForTeam &&
-            value === position) {
-            this.msgPositionValidation = `No puede guardar más ${value}`
+          if (teamPositions[Position.Defender] >= TeamLimits.maxDefendersForTeam) {
+            this.msgPositionValidation = `No puede guardar más ${position}`
             fullTeamPositions.push(value)
             playerActions.saveMoreDefenders = false;
           } else {
@@ -115,9 +114,8 @@ export class UtilSavePlayer {
     if (position === Position.Midfielder) {
       for (const value in teamPositions) {
         if (teamPositions.hasOwnProperty(value)) {
-          if (teamPositions[Position.Midfielder] >= TeamLimits.maxMidfieldersForTeam &&
-            value === position) {
-            this.msgPositionValidation = `No puede guardar más ${value}`
+          if (teamPositions[Position.Midfielder] >= TeamLimits.maxMidfieldersForTeam) {
+            this.msgPositionValidation = `No puede guardar más ${position}`
             fullTeamPositions.push(value)
             playerActions.saveMoreMidfielder = false;
           } else {
@@ -130,9 +128,8 @@ export class UtilSavePlayer {
     if (position === Position.Goalkeeper) {
       for (const value in teamPositions) {
         if (teamPositions.hasOwnProperty(value)) {
-          if (teamPositions[Position.Goalkeeper] >= TeamLimits.maxGoalkeepersForTeam &&
-            value === position) {
-            this.msgPositionValidation = `No puede guardar más ${value}`
+          if (teamPositions[Position.Goalkeeper] >= TeamLimits.maxGoalkeepersForTeam) {
+            this.msgPositionValidation = `No puede guardar más ${position}`
             fullTeamPositions.push(value)
             playerActions.saveMoreGoalkeeper = false;
           } else {
@@ -146,7 +143,7 @@ export class UtilSavePlayer {
       for (const value in teamPositions) {
         if (teamPositions.hasOwnProperty(value)) {
           if (teamPositions[Position.Attacker] >= TeamLimits.maxAttackersForTeam) {
-            this.msgPositionValidation = `No puede guardar más ${value}`
+            this.msgPositionValidation = `No puede guardar más ${position}`
             fullTeamPositions.push(value)
             playerActions.saveMoreAttacker = false;
           } else {
