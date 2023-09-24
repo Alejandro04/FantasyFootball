@@ -24,6 +24,8 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
   msgCompleteTeam: string = "";
   playerNotFound: boolean = false;
   leagueNotFound: boolean = false;
+  playerTab: boolean = true;
+  coachTab: boolean = false;
   leagueSubscription: Subscription = new Subscription;
   playerSubscription: Subscription = new Subscription;
   private searchLeaguesSubject = new Subject<string>();
@@ -95,6 +97,17 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
     this.selectedLeagueID = league.id;
     this.showLeagues = false;
     this.showSelectedLeague = true;
+  }
+
+  showTab(option: string){
+    if(option === 'player'){
+      this.playerTab = true;
+      this.coachTab = false;
+      return
+    }
+
+    this.playerTab = false;
+    this.coachTab = true;
   }
   
   cleanAllState() {

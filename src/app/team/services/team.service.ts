@@ -5,6 +5,7 @@ import { ApiLeagueResponse, League, LeagueResponse } from '../interfaces/league.
 import { PlayerParam } from '../interfaces/playerParams.interface';
 import { ApiPlayerResponse, PlayerResponse } from '../interfaces/player.interface';
 import { Injectable } from '@angular/core';
+import { CoachResponse, ApiCoachResponse } from '../interfaces/coach.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +13,31 @@ import { Injectable } from '@angular/core';
 export class TeamService {
   private leagueApiUrl = "https://api-football-v1.p.rapidapi.com/v3/leagues";
   private playerApiUrl = "https://api-football-v1.p.rapidapi.com/v3/players";
+  private coachApiUrl = "https://api-football-v1.p.rapidapi.com/v3/coachs"
   private playerListSubject = new Subject;
   playerList$ = this.playerListSubject.asObservable();
 
   constructor(
     private http: HttpClient
   ) { }
+
+  searchCoach(param: string): Observable<any[]>{
+     //return this.http.get<ApiCoachResponse>(`${this.coachApiUrl}?search=${param}`).pipe(
+    return this.http.get<ApiCoachResponse>('./assets/coach.json').pipe(
+      map((apiresponse) => apiresponse.response.map((coach) => ({
+        id: coach.id,
+        name: coach.name,
+        photo: coach.photo,
+        age: coach.age,
+        nationality: coach.nationality
+      }))),
+      catchError((error) => {
+        console.error('Error en la solicitud HTTP:', error);
+        // Devolver un observable vacío para que el flujo de datos continúe
+        return of([]);
+      })
+    );
+  }
 
   searchLeague(param: string): Observable<any[]> {
     //return this.http.get<ApiLeagueResponse>(`${this.leagueApiUrl}?search=${param}`).pipe(
@@ -29,7 +49,6 @@ export class TeamService {
       }))),
       catchError((error) => {
         console.error('Error en la solicitud HTTP:', error);
-        // Devolver un observable vacío para que el flujo de datos continúe
         return of([]);
       })
     );
@@ -40,7 +59,7 @@ export class TeamService {
     const player = params.player;
 
     //return this.http.get<ApiPlayerResponse>(`${this.playerApiUrl}?league=${leagueID}&search=${player}`).pipe(
-    return this.http.get<ApiPlayerResponse>('./assedts/player.json').pipe(
+    return this.http.get<ApiPlayerResponse>('./assets/player.json').pipe(
       map((apiresponse) => apiresponse.response.map((player) => ({
         id: player.player.id,
         name: player.player.name,

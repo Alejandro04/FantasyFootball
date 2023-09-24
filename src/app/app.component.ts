@@ -46,13 +46,13 @@ export class AppComponent implements OnInit {
       return item.id !== player.id
     })
 
-    localStorage.clear();
+    localStorage.removeItem('team')
     localStorage.setItem('team', JSON.stringify(this.team))
     this.completeTeam = false;
   }
 
   clearTeam(){
-    localStorage.clear();
+    localStorage.removeItem('team');
     this.team = [];
     this.completeTeam = false;
   }

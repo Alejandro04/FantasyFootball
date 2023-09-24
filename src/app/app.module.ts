@@ -7,11 +7,13 @@ import { TeamComponent } from './team/components/team.component';
 import { FormsModule } from '@angular/forms';
 import { ApiInterceptor } from './team/interceptors/interceptor';
 import { SpinnerService } from './team/services/spinnerService';
+import { CoachComponent } from './team/components/coach/coach.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TeamComponent
+    TeamComponent,
+    CoachComponent
   ],
   imports: [
     BrowserModule,
