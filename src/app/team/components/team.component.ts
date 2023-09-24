@@ -22,6 +22,7 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
   showSelectedLeague: boolean = false;
   showPlayer: boolean = false;
   showCoachs: boolean = false;
+  showCoach: boolean = false;
   playerDataSubject = new Subject;
   leagueInput: string = "";
   msgCompleteTeam: string = "";
@@ -30,6 +31,10 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
   coachNotFound: boolean = false;
   playerTab: boolean = true;
   coachTab: boolean = false;
+  msgValidationCoach: boolean = false;
+  coachInput: string = "";
+  savedCoach: boolean = false;
+  coachTabName: string = "Buscar coach"
   leagueSubscription: Subscription = new Subscription;
   playerSubscription: Subscription = new Subscription;
   coachSubscription: Subscription = new Subscription;
@@ -123,6 +128,7 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
     this.showCoachs = true;
     const element = event.target as HTMLSelectElement;
     const criteria = element.value;
+    this.savedCoach = false;
     this.searchCoachSubject.next(criteria);
   }
 
@@ -134,7 +140,8 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
   }
 
   selectCoach(coach: Coach){
-    this.showLeagues = false;
+    this.showCoachs = false;
+    this.showCoach = true;
     this.coach = coach;
   }
 
@@ -149,11 +156,26 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
     this.coachTab = true;
   }
 
-  saveCoach(coach: any){
+  saveCoach(coach: Coach){
+    const localStorageData = localStorage.getItem("coach")
+    if(localStorageData) {
+      this.msgValidationCoach = true;
+      return
+    }
 
+    this.savedCoach = true;
+    this.coachTabName = "Ver coach"
+    localStorage.setItem("coach", JSON.stringify(coach))
   }
 
-  
+  deleteCoach(){
+    this.msgValidationCoach = false;
+    this.showCoach = false;
+    this.coachInput = "";
+    this.coachTabName = "Buscar coach"
+    localStorage.removeItem('coach')
+  }
+
   cleanAllState() {
     this.showPlayer = false;
     this.savedPlayer = false;
