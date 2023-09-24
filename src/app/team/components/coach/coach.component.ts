@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Coach } from "../../interfaces/coach.interface";
+import { CoachResponse } from "../../interfaces/coach.interface";
 import { Subject, Subscription, debounceTime, distinctUntilChanged, switchMap } from "rxjs";
 import { TeamService } from "../../services/team.service";
 
@@ -9,7 +9,7 @@ import { TeamService } from "../../services/team.service";
   styleUrls: ['./coach.component.scss']
 })
 export class CoachComponent implements OnInit, OnDestroy {
-  coachs: Coach[] = [];
+  coachs: CoachResponse[] = [];
   showCoachs: boolean = false;
   showCoach: boolean = false;
   coachNotFound: boolean = false;
@@ -18,7 +18,7 @@ export class CoachComponent implements OnInit, OnDestroy {
   coachSubscription: Subscription = new Subscription;
   private searchCoachSubject = new Subject<string>();
   msgValidationCoach: boolean = false;
-  coach!: Coach;
+  coach!: CoachResponse;
 
   constructor(
     private teamService: TeamService
@@ -51,7 +51,7 @@ export class CoachComponent implements OnInit, OnDestroy {
     const localStorageData = localStorage.getItem("coach");
     if(localStorageData){
       this.savedCoach = true;
-      const coach:Coach = JSON.parse(localStorageData);
+      const coach:CoachResponse = JSON.parse(localStorageData);
       this.selectCoach(coach)
     }
   }
@@ -64,13 +64,13 @@ export class CoachComponent implements OnInit, OnDestroy {
     this.searchCoachSubject.next(criteria);
   }
 
-  selectCoach(coach: Coach) {
+  selectCoach(coach: CoachResponse) {
     this.showCoachs = false;
     this.showCoach = true;
     this.coach = coach;
   }
 
-  saveCoach(coach: Coach) {
+  saveCoach(coach: CoachResponse) {
     const localStorageData = localStorage.getItem("coach")
     if (localStorageData) {
       this.msgValidationCoach = true;
@@ -83,7 +83,6 @@ export class CoachComponent implements OnInit, OnDestroy {
 
   deleteCoach() {
     this.msgValidationCoach = false;
-    this.showCoach = false;
     this.coachInput = "";
     localStorage.removeItem('coach')
   }

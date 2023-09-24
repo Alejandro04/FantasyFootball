@@ -5,7 +5,7 @@ import { ApiLeagueResponse, League, LeagueResponse } from '../interfaces/league.
 import { PlayerParam } from '../interfaces/playerParams.interface';
 import { ApiPlayerResponse, PlayerResponse } from '../interfaces/player.interface';
 import { Injectable } from '@angular/core';
-import { Coach, ApiCoachResponse } from '../interfaces/coach.interface';
+import { CoachResponse, ApiCoachResponse } from '../interfaces/coach.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ import { Coach, ApiCoachResponse } from '../interfaces/coach.interface';
 export class TeamService {
   private leagueApiUrl = "https://api-football-v1.p.rapidapi.com/v3/leagues";
   private playerApiUrl = "https://api-football-v1.p.rapidapi.com/v3/players";
+  private coachApiUrl = "https://api-football-v1.p.rapidapi.com/v3/coachs"
   private playerListSubject = new Subject;
   playerList$ = this.playerListSubject.asObservable();
 
@@ -21,12 +22,18 @@ export class TeamService {
   ) { }
 
   searchCoach(param: string): Observable<any[]>{
+     //return this.http.get<ApiCoachResponse>(`${this.coachApiUrl}?search=${param}`).pipe(
     return this.http.get<ApiCoachResponse>('./assets/coach.json').pipe(
-      map((apiresponse) => {
-        return apiresponse.response
-      }),
+      map((apiresponse) => apiresponse.response.map((coach) => ({
+        id: coach.id,
+        name: coach.name,
+        photo: coach.photo,
+        age: coach.age,
+        nationality: coach.nationality
+      }))),
       catchError((error) => {
         console.error('Error en la solicitud HTTP:', error);
+        // Devolver un observable vacío para que el flujo de datos continúe
         return of([]);
       })
     );
