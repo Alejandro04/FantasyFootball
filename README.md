@@ -2,6 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
 
+## Production
+https://fantasy-football-hazel.vercel.app/
+
+I did not use netlify because I had configuration problems, it is much faster to use Vercel and for testing purposes, I made the decision to use it.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
