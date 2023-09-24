@@ -14,7 +14,19 @@ export class UtilSavePlayer {
       
   constructor(
     public teamService: TeamService
-  ) { }
+  ) { 
+   this.getValidations();
+  }
+
+  getValidations(){
+    this.teamService.resetValidations$.subscribe(() => {
+      playerActions.saveMoreAttacker = true;
+      playerActions.saveMoreDefenders = true;
+      playerActions.saveMoreGoalkeeper = true;
+      playerActions.saveMoreIDPlayers = true;
+      playerActions.saveMoreMidfielder = true
+    });
+  }
 
   savePlayer(playerData:Player): any {
     const localStorageData = localStorage.getItem('team');
@@ -41,6 +53,7 @@ export class UtilSavePlayer {
         !getMaxPlayerForTeam.saveMoreDefenders ||
         !getMaxPlayerForTeam.saveMoreGoalkeeper ||
         !getMaxPlayerForTeam.saveMoreMidfielder) {
+
         this.msgValidation = "No puede guardar este jugador"
         this.playerValidate = true;
         return

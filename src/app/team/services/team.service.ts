@@ -16,6 +16,8 @@ export class TeamService {
   private coachApiUrl = "https://api-football-v1.p.rapidapi.com/v3/coachs"
   private playerListSubject = new Subject;
   playerList$ = this.playerListSubject.asObservable();
+  private resetStateValidationsSubject = new Subject;
+  resetValidations$ = this.resetStateValidationsSubject.asObservable();
 
   constructor(
     private http: HttpClient
@@ -85,5 +87,13 @@ export class TeamService {
 
   addPlayer(player: any) {
     this.playerListSubject.next(player);
+  }
+
+  getValidations(){
+    return this.resetStateValidationsSubject;
+  }
+
+  resetValidations(){
+    this.resetStateValidationsSubject.next("")
   }
 }

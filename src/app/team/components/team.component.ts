@@ -123,6 +123,12 @@ export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
     this.leagues = [];
     this.leagueInput = "";
     this.leagueNotFound = false;
+
+    //el ultimo estado de un jugador cuando se valida
+    // se debe actualizar cuando quiero fichar otro jugador
+    // o en su defecto volver a todos con el estado original (true)
+    // para que los sig jugadores puedan guardar
+    this.teamService.resetValidations();
   }
 
   cleanPlayerState(){
