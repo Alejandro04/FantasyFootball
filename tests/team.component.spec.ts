@@ -23,7 +23,7 @@ describe('TeamComponent', () => {
     teamService = TestBed.inject(TeamService);
   });
 
-  it('should create the app', () => {
+  it('should team component in the app', () => {
     expect(component).toBeTruthy();
   });
 

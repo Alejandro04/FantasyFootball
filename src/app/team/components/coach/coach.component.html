@@ -10,12 +10,12 @@
   </div>
 
   <div *ngIf="showCoach" class="selectCoachContainer">
-    <img src="{{ coach.photo }}" alt="{{ coach.name }}" />
+    <img src="{{ coach?.photo }}" alt="{{ coach?.name }}" />
     <div class="playerDetails">
-      <div> <label>Nombre: </label> {{ coach.name }} </div>
-      <div> <label>Edad: </label> {{ coach.age }} </div>
-      <div> <label>Nacionalidad: </label> {{ coach.nationality }} </div>
-      <button *ngIf="!savedCoach" (click)="saveCoach(coach)"> Contratar </button>
+      <div> <label id="coachName">Nombre: </label> {{ coach?.name }} </div>
+      <div> <label>Edad: </label> {{ coach?.age }} </div>
+      <div> <label>Nacionalidad: </label> {{ coach?.nationality }} </div>
+      <button *ngIf="!savedCoach && coach" (click)="saveCoach(coach)"> Contratar </button>
     </div>
   </div>
   <section *ngIf="msgValidationCoach" class="validateCoachContainer">
@@ -25,6 +25,6 @@
   </section>
   <section *ngIf="savedCoach" class="savedCoachContainer">
     <h2>Felicidades!</h2>
-    <p> Has contratado a {{ coach.name }} </p>
+    <p> Has contratado a {{ coach?.name }} </p>
   </section>
 </section>

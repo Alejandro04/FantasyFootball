@@ -18,17 +18,17 @@ export interface Paging {
 
 export interface CoachResponse {
   id: number
-  name: string
-  firstname: string
-  lastname: string
-  age: number
-  birth: Birth
-  nationality: string
-  height: string
-  weight: string
-  photo: string
-  team: Team
-  career: Career[]
+  name?: string
+  firstname?: string
+  lastname?: string
+  age?: number
+  birth?: Birth
+  nationality?: string
+  height?: string
+  weight?: string
+  photo?: string
+  team?: Team
+  career?: Career[]
 }
 
 export interface Birth {

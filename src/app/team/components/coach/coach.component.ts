@@ -18,7 +18,7 @@ export class CoachComponent implements OnInit, OnDestroy {
   coachSubscription: Subscription = new Subscription;
   private searchCoachSubject = new Subject<string>();
   msgValidationCoach: boolean = false;
-  coach!: CoachResponse;
+  coach: CoachResponse | undefined;
 
   constructor(
     private teamService: TeamService

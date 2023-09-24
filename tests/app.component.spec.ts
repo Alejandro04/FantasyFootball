@@ -23,23 +23,4 @@ describe('AppComponent', () => {
   it('should create the app', () => {
     expect(component).toBeTruthy();
   });
-
-  // it('should loop through players when team is not empty', () => {
-  //   const player: Player = {
-  //     id: 1,
-  //     name: 'Test Player',
-  //     photo: 'test.jpg',
-  //     age: 25,
-  //     nationality: 'Test Nationality',
-  //     position: 'Test Position',
-  //     teamID: 86
-  //   };
-
-  //   component.team = [player];
-  //   fixture.detectChanges();
-
-  //   const playerElements = fixture.nativeElement.querySelectorAll('.playerName');
-  //   expect(playerElements.length).toBe(1); // Verifica que se muestre el jugador
-  //   expect(playerElements[0].textContent).toContain('Test Player'); // Verifica el nombre del jugador
-  // });
 });
