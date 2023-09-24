@@ -49,116 +49,19 @@ describe('CoachComponent', () => {
     expect(playerNameElement).toBeTruthy();
   });
 
-  // it('should have less than three players with position "Attackers"', () => {
-  //   fixture.detectChanges();
+  it('should have max one coachs', () => {
+    fixture.detectChanges();
 
-  //   const fakePlayer = [
-  //     {
-  //       "id": 1100,
-  //       "name": "E. Haaland",
-  //       "photo": "https://media-4.api-sports.io/football/players/1100.png",
-  //       "age": 23,
-  //       "nationality": "Norway",
-  //       "position": "Midfielder",
-  //       "teamID": 50,
-  //       "teamName": "Manchester City"
-  //     },
-  //     {
-  //       "id": 30412,
-  //       "name": "Kevin Mirallas",
-  //       "photo": "https://media-4.api-sports.io/football/players/30412.png",
-  //       "age": 36,
-  //       "nationality": "Belgium",
-  //       "position": "Midfielder",
-  //       "teamID": 45,
-  //       "teamName": "Everton"
-  //     },
-  //     {
-  //       "id": 1485,
-  //       "name": "Bruno Fernandes",
-  //       "photo": "https://media-4.api-sports.io/football/players/1485.png",
-  //       "age": 29,
-  //       "nationality": "Portugal",
-  //       "position": "Midfielder",
-  //       "teamID": 33,
-  //       "teamName": "Manchester United"
-  //     },
-  //     {
-  //       "id": 874,
-  //       "name": "Cristiano Ronaldo",
-  //       "photo": "https://media-4.api-sports.io/football/players/874.png",
-  //       "age": 38,
-  //       "nationality": "Portugal",
-  //       "position": "Attacker",
-  //       "teamID": 33,
-  //       "teamName": "Manchester United"
-  //     },
-  //     {
-  //       "id": 41642,
-  //       "name": "José Eduardo Rosa Vale de Castro",
-  //       "photo": "https://media-4.api-sports.io/football/players/41642.png",
-  //       "age": 39,
-  //       "nationality": "Portugal",
-  //       "position": "Defender",
-  //       "teamID": 728,
-  //       "teamName": "Rayo Vallecano"
-  //     },
-  //     {
-  //       "id": 1853,
-  //       "name": "Bruno Jordão",
-  //       "photo": "https://media-4.api-sports.io/football/players/1853.png",
-  //       "age": 25,
-  //       "nationality": "Portugal",
-  //       "position": "Midfielder",
-  //       "teamID": 39,
-  //       "teamName": "Wolves"
-  //     },
-  //     {
-  //       "id": 747,
-  //       "name": "Casemiro",
-  //       "photo": "https://media-4.api-sports.io/football/players/747.png",
-  //       "age": 31,
-  //       "nationality": "Brazil",
-  //       "position": "Defender",
-  //       "teamID": 541,
-  //       "teamName": "Real Madrid"
-  //     },
-  //     {
-  //       "id": 7,
-  //       "name": "Casemiro",
-  //       "photo": "https://media-4.api-sports.io/football/players/747.png",
-  //       "age": 31,
-  //       "nationality": "Brazil",
-  //       "position": "Defender",
-  //       "teamID": 541,
-  //       "teamName": "Real Madrid"
-  //     },
-  //     {
-  //       "id": 17,
-  //       "name": "Casemiro",
-  //       "photo": "https://media-4.api-sports.io/football/players/747.png",
-  //       "age": 31,
-  //       "nationality": "Brazil",
-  //       "position": "Attacker",
-  //       "teamID": 541,
-  //       "teamName": "Real Madrid"
-  //     },
-  //     {
-  //       "id": 120,
-  //       "name": "Casemiro",
-  //       "photo": "https://media-4.api-sports.io/football/players/747.png",
-  //       "age": 31,
-  //       "nationality": "Brazil",
-  //       "position": "Defender",
-  //       "teamID": 541,
-  //       "teamName": "Real Madrid"
-  //     }
-  //   ]
-  //   const attackers:Player[] = fakePlayer.filter((item:Player) => {
-  //     return item.position === "Attacker"
-  //   })
+    const fakeCoach = [
+      {
+        "id": 40,
+        "name": "T. Tuchel",
+        "firstname": "Thomas",
+        "lastname": "Tuchel",
+        "age": 50,
+      },
+    ]
 
-  //   expect(attackers.length).toBeLessThan(3);
-  // });
-
+    expect(fakeCoach.length).toBeLessThan(2);
+  });
 });
