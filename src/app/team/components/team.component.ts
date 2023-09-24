@@ -13,7 +13,7 @@ import { UtilSavePlayer } from "../utils/savePlayer.util";
 })
 export class TeamComponent extends UtilSavePlayer implements OnInit, OnDestroy {
   leagues: League[] = [];
-  player!: Player;
+  player: Player | undefined;
   selectedLeagueID: number = 0;
   selectedLeague!: League;
   showLeagues: boolean = true;
