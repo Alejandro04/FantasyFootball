@@ -22,18 +22,23 @@ Run `npm run test:watch` to execute the unit tests via **JEST**
 
 We have the dashboard, we can see in the sidebar the players list and, 
 in the content two inputs search (players and coach).
+
 ![Dashboard](./src/assets/1.png)
 
 We can see the search league action, you need to write the league name with the highest possible specificity and do a click in your ideal option.
+
 ![Dashboard](./src/assets/4.png)
 
 We can see the search player action, you need to write the player name with the highest possible specificity.
+
 ![Dashboard](./src/assets/5.png)
 
 We can see a selected player after of searched.
+
 ![Dashboard](./src/assets/2.png)
 
 We can see a selected coach after of searched.
+
 ![Dashboard](./src/assets/3.png)
 
 
