@@ -41,6 +41,12 @@ We can see a selected coach after of searched.
 
 ![Dashboard](./src/assets/3.png)
 
+## Important
+
+Players belong to clubs, not nations. The decision was made because we do not have a search type endpoint to search for players by nations.
+
+It is possible to use players based on nations with more engineering, studying other endpoints and matching objects in the UI, but it is not the idea way when we work. At a working level it is best to talk to the backend team to create a resource to help us in the UI.
+
 
 
 
