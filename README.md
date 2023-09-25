@@ -46,11 +46,26 @@ We can see a selected coach after of searched.
 
 ![Dashboard](./src/assets/3.png)
 
-## Important
+## Refactor proyect for v2
 
-Players belong to clubs, not nations. The decision was made because we do not have a search type endpoint to search for players by nations.
+1. Study the endpoint https://api-football-v1.p.rapidapi.com/v3/teams?league=1&season=2022 for get the countries teams.
 
-It is possible to use players based on nations with more engineering, studying other endpoints and matching objects in the UI, but it is not the idea way when we work. At a working level it is best to talk to the backend team to create a resource to help us in the UI.
+2. Study the endpoint https://api-football-v1.p.rapidapi.com/v3/players/squads?team=${ID} for get the country team
+
+3. Add the team in memory before save in LS
+
+4. Improve UX
+
+5. Save the team when the user select all the players
+
+6. Configurate the formation in the UI for a better UX
+
+7. See https://media-4.api-sports.io/football/teams/26.png for get the flags
+
+## Next step
+
+1. Make the project public and make an Angular video tutorial.
+
 
 
 
