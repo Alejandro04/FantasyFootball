@@ -5,7 +5,7 @@
         <mat-label>Selecciona un equipo</mat-label>
         <mat-select>
           <mat-option *ngFor="let country of countries" [value]="country.id">
-            {{country.name}} 
+            {{country.name}}
             <img style="width: 20px;" src="{{ country.logo }}" alt="{{country.name}}">
           </mat-option>
         </mat-select>
@@ -15,7 +15,7 @@
       <div class="coachContainer">
         <section class="playerContainer">
           <div class="playerDetail">
-            <img class="playerImg"  src="{{ coach.photo }}" alt="{{ coach.name }}">
+            <img class="playerImg" src="{{ coach.photo }}" alt="{{ coach.name }}">
             <div>
               <span>{{ coach.name }}</span>
             </div>
@@ -32,7 +32,7 @@
           <mat-list-item>
             <section class="playerContainer">
               <div class="playerDetail">
-                <img class="playerImg"  src="{{ player.photo }}" alt="{{ player.name }}">
+                <img class="playerImg" src="{{ player.photo }}" alt="{{ player.name }}">
                 <div>
                   <span>{{ player.name }}</span>
                 </div>
@@ -45,13 +45,72 @@
           <mat-divider></mat-divider>
         </ng-container>
       </mat-list>
-      
+
 
     </mat-card>
   </div>
   <div class="content">
     <div class="team">
-      
+      <section class="itemTitle">
+        <p>Mi equipo</p>
+        <p> Total jugadores 4/16 </p>
+      </section>
+      <section class="teamItem">
+        <div>
+          <div class="itemTitle">
+            <p>Goalkeeper</p>
+            <p>Al menos 2</p>
+          </div>
+          <ng-container>
+            <div class="itemPlayers">
+              <img src="./assets/user.png" alt="">
+              <img src="./assets/user.png" alt="">
+              <img src="./assets/user.png" alt="">
+              <img src="./assets/user.png" alt="">
+            </div>
+          </ng-container>
+        </div>
+        <div>
+          <div class="itemTitle">
+            <p>Defender</p>
+            <p>Al menos 4</p>
+          </div>
+          <ng-container>
+            <div class="itemPlayers">
+              <img src="./assets/user.png" alt="">
+              <img src="./assets/user.png" alt="">
+              <img src="./assets/user.png" alt="">
+              <img src="./assets/user.png" alt="">
+            </div>
+          </ng-container>
+        </div>
+        <div>
+          <div class="itemTitle">
+            <p>Midfielder</p>
+            <p>Al menos 4</p>
+          </div>
+          <ng-container>
+            <div class="itemPlayers">
+              <img src="./assets/user.png" alt="">
+              <img src="./assets/user.png" alt="">
+              <img src="./assets/user.png" alt="">
+              <img src="./assets/user.png" alt="">
+            </div>
+          </ng-container>
+        </div>
+        <div>
+          <div class="itemTitle">
+            <p>Attacker</p>
+            <p>Al menos 2</p>
+          </div>
+          <ng-container>
+            <div class="itemPlayers">
+              <img src="./assets/user.png" alt="">
+              <img src="./assets/user.png" alt="">
+            </div>
+          </ng-container>
+        </div>
+      </section>
     </div>
     <div class="coach">
       <div>
