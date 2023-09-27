@@ -11,6 +11,7 @@ import { Player } from './team.interface';
 export class AppComponent implements OnInit {
   countries: Team[] = [];
   players: Player[] = [];
+  coach: any;
 
   constructor(
     private teamService: TeamV2Service
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
   ngOnInit(){
     this.getCountries();
     this.getTeam();
+    this.getCoach();
   }
 
   getCountries(){
@@ -30,6 +32,12 @@ export class AppComponent implements OnInit {
   getTeam(){
     this.teamService.getTeam(1).subscribe((players) => {
       this.players = players;
+    })
+  }
+
+  getCoach(){
+    this.teamService.getCoach(1).subscribe((coach) => {
+      this.coach = coach[0];
     })
   }
 }

@@ -11,7 +11,23 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-label>Entrenador</mat-label>
+      <div class="coachContainer">
+        <section class="playerContainer">
+          <div class="playerDetail">
+            <img class="playerImg"  src="{{ coach.photo }}" alt="{{ coach.name }}">
+            <div>
+              <span>{{ coach.name }}</span>
+            </div>
+          </div>
+          <div class="playerPosition">
+            <span>{{ coach.position }}</span>
+          </div>
+        </section>
+      </div>
+
       <mat-list class="playerList">
+        <mat-label>Jugadores</mat-label>
         <ng-container *ngFor="let player of players">
           <mat-list-item>
             <section class="playerContainer">

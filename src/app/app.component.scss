@@ -51,6 +51,9 @@
 .playerContainer{
   display: flex;
   justify-content: space-between;
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 .playerDetail{
@@ -70,4 +73,9 @@
 .playerList{
   max-height: 600px;
   overflow: auto ;
+}
+
+.coachContainer{
+  border: 1px solid #eee;
+  border-radius: 10px;
 }

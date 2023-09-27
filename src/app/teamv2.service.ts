@@ -3,6 +3,7 @@ import { Observable, Subject, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ApiCountryResponse } from './country.interface';
+import { ApiCouchResponse } from './coach.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -52,5 +53,19 @@ export class TeamV2Service {
             return of([]);
           })
         );
+  }
+
+  getCoach(teamID: number){
+    return this.http.get<ApiCouchResponse>(`./assets/coach.json`).pipe(  
+      map((apiresponse) => apiresponse.response.map((coach:any) => ({
+          id: coach.id,
+          name: coach.name,
+          photo: coach.photo
+        }))),
+        catchError((error) => {
+          console.error('Error en la solicitud HTTP:', error);
+          return of([]);
+        })
+      );
   }
 }
