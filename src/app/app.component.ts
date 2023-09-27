@@ -22,6 +22,12 @@ export class AppComponent implements OnInit {
   player!: Player;
   completeTeam: boolean = false;
 
+  countries: any[] = [
+    {value: 'arg', viewValue: 'Argentina'},
+    {value: 'bra', viewValue: 'Brasil'},
+    {value: 'ven', viewValue: 'Venezuela'},
+  ];
+
   constructor(
     private teamService: TeamService
   ){}
