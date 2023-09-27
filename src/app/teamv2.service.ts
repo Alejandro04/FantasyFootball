@@ -9,6 +9,7 @@ import { ApiCountryResponse } from './country.interface';
 })
 export class TeamV2Service {
   private urlCountries = "https://api-football-v1.p.rapidapi.com/v3/teams"
+  private urlTeam = "https://api-football-v1.p.rapidapi.com/v3/players/squads"
 
   constructor(
     private http: HttpClient
@@ -29,5 +30,27 @@ export class TeamV2Service {
         return of([]);
       })
     );
+  }
+
+  getTeam(teamID:number){
+    teamID = 1
+     return this.http.get<any>(`./assets/team.json`).pipe(
+     // return this.http.get<ApiCountryResponse>(`${this.urlTeam}?team=${teamID}`).pipe(  
+        map((apiresponse) => apiresponse.response.map((team:any) => {
+          return team.players;
+        })),
+        map((players) => players[0].map((player:any) => {
+            return {
+              id: player.id,
+              name: player.name,
+              position: player.position,
+              photo: player.photo
+            }
+        })),
+          catchError((error) => {
+            console.error('Error en la solicitud HTTP:', error);
+            return of([]);
+          })
+        );
   }
 }

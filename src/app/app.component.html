@@ -1,13 +1,12 @@
 <div class="appContainer">
   <div>
     <mat-card class="sidebarCard">
-      <p >Selecciona tu equipo</p>
       <mat-form-field>
         <mat-label>Selecciona un equipo</mat-label>
         <mat-select>
           <mat-option *ngFor="let country of countries" [value]="country.id">
             {{country.name}} 
-            <img style="width: 20px;" src="{{ country.logo }}" alt="flag">
+            <img style="width: 20px;" src="{{ country.logo }}" alt="{{country.name}}">
           </mat-option>
         </mat-select>
       </mat-form-field>

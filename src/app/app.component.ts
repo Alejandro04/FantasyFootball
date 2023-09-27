@@ -9,6 +9,7 @@ import { Team } from './country.interface';
 })
 export class AppComponent implements OnInit {
   countries: Team[] = [];
+  players: any;
 
   constructor(
     private teamService: TeamV2Service
@@ -16,11 +17,18 @@ export class AppComponent implements OnInit {
 
   ngOnInit(){
     this.getCountries();
+    this.getTeam();
   }
 
   getCountries(){
     this.teamService.getCountries().subscribe((countries) => {
       this.countries = countries;
+    })
+  }
+
+  getTeam(){
+    this.teamService.getTeam(1).subscribe((players) => {
+      this.players = players;
     })
   }
 }
