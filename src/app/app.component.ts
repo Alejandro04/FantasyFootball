@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TeamV2Service } from './teamv2.service';
 import { Team } from './country.interface';
+import { Player } from './team.interface';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { Team } from './country.interface';
 })
 export class AppComponent implements OnInit {
   countries: Team[] = [];
-  players: any;
+  players: Player[] = [];
 
   constructor(
     private teamService: TeamV2Service

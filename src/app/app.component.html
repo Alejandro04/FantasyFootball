@@ -10,6 +10,27 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+
+      <mat-list class="playerList">
+        <ng-container *ngFor="let player of players">
+          <mat-list-item>
+            <section class="playerContainer">
+              <div class="playerDetail">
+                <img class="playerImg"  src="{{ player.photo }}" alt="{{ player.name }}">
+                <div>
+                  <span>{{ player.name }}</span>
+                </div>
+              </div>
+              <div class="playerPosition">
+                <span>{{ player.position }}</span>
+              </div>
+            </section>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-container>
+      </mat-list>
+      
+
     </mat-card>
   </div>
   <div class="content">

@@ -41,3 +41,33 @@
     border-radius: 100%;
   }
 }
+
+.playerImg{
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+
+.playerContainer{
+  display: flex;
+  justify-content: space-between;
+}
+
+.playerDetail{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px 5px 5px 0;
+}
+
+.playerPosition{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 5px;
+}
+
+.playerList{
+  max-height: 600px;
+  overflow: auto ;
+}
