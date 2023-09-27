@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { TeamService } from './team/services/team.service';
 import { Player } from './team/interfaces/player.interface';
+import {NgFor, AsyncPipe} from '@angular/common';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormControl } from '@angular/forms';
+import { Observable, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +14,9 @@ import { Player } from './team/interfaces/player.interface';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  myControl = new FormControl('');
+  options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions!: Observable<string[]>;
   title = 'fantasyFootball';
   team: any[] = [];
   player!: Player;
@@ -20,6 +29,17 @@ export class AppComponent implements OnInit {
   ngOnInit(){
     this.getPlayer();
     this.getTeam();
+
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   getPlayer(){
