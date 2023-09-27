@@ -5,8 +5,9 @@
       <mat-form-field>
         <mat-label>Selecciona un equipo</mat-label>
         <mat-select>
-          <mat-option *ngFor="let country of countries" [value]="country.value">
-            {{country.viewValue}}
+          <mat-option *ngFor="let country of countries" [value]="country.id">
+            {{country.name}} 
+            <img style="width: 20px;" src="{{ country.logo }}" alt="flag">
           </mat-option>
         </mat-select>
       </mat-form-field>
