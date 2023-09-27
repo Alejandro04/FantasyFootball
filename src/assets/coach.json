@@ -1,80 +1,135 @@
 {
     "get": "coachs",
     "parameters": {
-        "search": "tuch"
+        "team": "26"
     },
     "errors": [],
-    "results": 1,
+    "results": 3,
     "paging": {
         "current": 1,
         "total": 1
     },
     "response": [
         {
-            "id": 40,
-            "name": "T. Tuchel",
-            "firstname": "Thomas",
-            "lastname": "Tuchel",
-            "age": 50,
+            "id": 326,
+            "name": "L. Scaloni",
+            "firstname": "Lionel Sebasti\u00e1n",
+            "lastname": "Scaloni",
+            "age": 45,
             "birth": {
-                "date": "1973-08-29",
-                "place": "Krumbach",
-                "country": "Germany"
+                "date": "1978-05-16",
+                "place": "Rosario",
+                "country": "Argentina"
             },
-            "nationality": "Germany",
-            "height": "192 cm",
-            "weight": "85 kg",
-            "photo": "https:\/\/media-4.api-sports.io\/football\/coachs\/40.png",
+            "nationality": "Argentina",
+            "height": "182 cm",
+            "weight": "80 kg",
+            "photo": "https:\/\/media-4.api-sports.io\/football\/coachs\/326.png",
             "team": {
-                "id": 157,
-                "name": "Bayern Munich",
-                "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/157.png"
+                "id": 26,
+                "name": "Argentina",
+                "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/26.png"
             },
             "career": [
                 {
                     "team": {
-                        "id": 157,
-                        "name": "Bayern Munich",
-                        "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/157.png"
+                        "id": 26,
+                        "name": "Argentina",
+                        "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/26.png"
                     },
-                    "start": "2023-03-01",
+                    "start": "2018-08-01",
+                    "end": null
+                }
+            ]
+        },
+        {
+            "id": 10760,
+            "name": "J. Borrello",
+            "firstname": "Jos\u00e9 Carlos",
+            "lastname": "Borrello",
+            "age": 68,
+            "birth": {
+                "date": "1955-09-12",
+                "place": null,
+                "country": "Argentina"
+            },
+            "nationality": "Argentina",
+            "height": null,
+            "weight": null,
+            "photo": "https:\/\/media-4.api-sports.io\/football\/coachs\/10760.png",
+            "team": {
+                "id": 26,
+                "name": "Argentina",
+                "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/26.png"
+            },
+            "career": [
+                {
+                    "team": {
+                        "id": 26,
+                        "name": "Argentina",
+                        "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/26.png"
+                    },
+                    "start": "2018-04-01",
+                    "end": "2021-07-01"
+                },
+                {
+                    "team": {
+                        "id": 12500,
+                        "name": "Argentina U17",
+                        "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/12500.png"
+                    },
+                    "start": "2018-02-01",
                     "end": null
                 },
                 {
                     "team": {
-                        "id": 49,
-                        "name": "Chelsea",
-                        "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/49.png"
+                        "id": 10284,
+                        "name": "Argentina U20",
+                        "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/10284.png"
                     },
-                    "start": "2021-01-01",
-                    "end": "2022-09-01"
+                    "start": "2012-08-01",
+                    "end": "2022-04-01"
                 },
                 {
                     "team": {
-                        "id": 85,
-                        "name": "PSG",
-                        "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/85.png"
+                        "id": 26,
+                        "name": "Argentina",
+                        "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/26.png"
                     },
-                    "start": "2018-07-01",
-                    "end": "2020-12-01"
-                },
+                    "start": "2003-01-01",
+                    "end": "2011-12-01"
+                }
+            ]
+        },
+        {
+            "id": 14708,
+            "name": "F. Olazar",
+            "firstname": "Francisco",
+            "lastname": "Olazar",
+            "age": 138,
+            "birth": {
+                "date": "1885-07-10",
+                "place": "Quilmes",
+                "country": "Argentina"
+            },
+            "nationality": "Argentina",
+            "height": null,
+            "weight": null,
+            "photo": "https:\/\/media-4.api-sports.io\/football\/coachs\/14708.png",
+            "team": {
+                "id": 26,
+                "name": "Argentina",
+                "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/26.png"
+            },
+            "career": [
                 {
                     "team": {
-                        "id": 165,
-                        "name": "Borussia Dortmund",
-                        "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/165.png"
+                        "id": 26,
+                        "name": "Argentina",
+                        "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/26.png"
                     },
-                    "start": "2015-07-01",
-                    "end": "2017-05-01"
-                },
-                {
-                    "team": {
-                        "id": null,
-                        "name": "Mainz",
-                        "logo": null
-                    },
-                    "start": "2009-08-01",
-                    "end": "2014-05-01"
+                    "start": "1930-07-01",
+                    "end": "1930-07-01"
                 }
             ]
         }

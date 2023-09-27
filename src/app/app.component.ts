@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TeamService } from './team/services/team.service';
-import { Player } from './team/interfaces/player.interface';
-import {NgFor, AsyncPipe} from '@angular/common';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { FormControl } from '@angular/forms';
-import { Observable, map, startWith } from 'rxjs';
+import { TeamV2Service } from './teamv2.service';
+import { Team } from './country.interface';
+import { Player } from './team.interface';
 
 @Component({
   selector: 'app-root',
@@ -14,66 +9,65 @@ import { Observable, map, startWith } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  myControl = new FormControl('');
-  options: string[] = ['One', 'Two', 'Three'];
-  filteredOptions!: Observable<string[]>;
-  title = 'fantasyFootball';
-  team: any[] = [];
-  player!: Player;
-  completeTeam: boolean = false;
+  countries: Team[] = [];
+  players: Player[] = [];
+  coach: any;
+  goalKeepers: any[] = []
 
   constructor(
-    private teamService: TeamService
-  ){}
+    private teamService: TeamV2Service
+  ) { }
 
-  ngOnInit(){
-    this.getPlayer();
+  ngOnInit() {
+    this.getCountries();
     this.getTeam();
-
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '')),
-    );
+    this.getCoach();
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  getCountries() {
+    this.teamService.getCountries().subscribe((countries) => {
+      this.countries = countries;
+    })
   }
 
-  getPlayer(){
-    this.teamService.playerList$.subscribe((player) => {
-      if(player){
-        this.team = [ ...this.team, player ]
-      }
-
-      if(this.team.length === 16){
-        this.completeTeam = true;
-      }
-    });
+  getTeam() {
+    this.teamService.getTeam(1).subscribe((players) => {
+      this.players = players;
+    })
   }
 
-  getTeam(){
-    const teamDataJSON = localStorage.getItem('team');
-    if (teamDataJSON) {
-      this.team = JSON.parse(teamDataJSON);
+  getCoach() {
+    this.teamService.getCoach(1).subscribe((coach) => {
+      this.coach = coach[0];
+    })
+  }
+
+  savePlayer(player: any) {
+    if (player.position === 'Goalkeeper' && this.goalKeepers.length <= 3) {
+
+      const savedPlayer = this.goalKeepers.find((item) => {
+        return item.id === player.id
+      })
+
+      if (savedPlayer) return
+
+      this.goalKeepers = [
+        ...this.goalKeepers,
+        {
+          id: player.id,
+          name: player.name,
+          photo: player.photo,
+          position: player.position
+        }
+      ]
     }
   }
 
-  deletePlayer(player:Player){
-    this.team = this.team.filter((item:Player) => {
-      return item.id !== player.id
-    })
-
-    localStorage.removeItem('team')
-    localStorage.setItem('team', JSON.stringify(this.team))
-    this.completeTeam = false;
-  }
-
-  clearTeam(){
-    localStorage.removeItem('team');
-    this.team = [];
-    this.completeTeam = false;
+  deletePlayer(player:any){
+    if(player.position === 'Goalkeeper'){
+      this.goalKeepers = this.goalKeepers.filter((item) => {
+        return item.id !== player.id;
+      })
+    }
   }
 }
