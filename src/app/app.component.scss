@@ -99,3 +99,12 @@
   border: 1px solid #eee;
   border-radius: 10px;
 }
+
+.close{
+  position: absolute;
+  font-size: 18px;
+  font-weight: bold;
+  &:hover{
+    cursor: pointer;
+  }
+}

@@ -30,7 +30,7 @@
         <mat-label>Jugadores</mat-label>
         <ng-container *ngFor="let player of players">
           <mat-list-item>
-            <section class="playerContainer">
+            <section class="playerContainer" (click)="savePlayer(player)">
               <div class="playerDetail">
                 <img class="playerImg" src="{{ player.photo }}" alt="{{ player.name }}">
                 <div>
@@ -63,10 +63,10 @@
           </div>
           <ng-container>
             <div class="itemPlayers">
-              <img src="./assets/user.png" alt="">
-              <img src="./assets/user.png" alt="">
-              <img src="./assets/user.png" alt="">
-              <img src="./assets/user.png" alt="">
+              <div *ngFor="let goal of goalKeepers">
+                <span class="close" (click)="deletePlayer(goal)">x</span>
+                <img src="{{ goal?.photo }}" alt="{{ goal?.name }}">
+              </div>
             </div>
           </ng-container>
         </div>
