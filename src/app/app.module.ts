@@ -3,11 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TeamComponent } from './team/components/team.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ApiInterceptor } from './team/interceptors/interceptor';
-import { SpinnerService } from './team/services/spinnerService';
-import { CoachComponent } from './team/components/coach/coach.component';
+import { ApiInterceptor } from './interceptor';
+import { SpinnerService } from './spinner.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -19,9 +17,7 @@ import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    TeamComponent,
-    CoachComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TeamV2Service } from './teamv2.service';
 import { Team } from './country.interface';
 import { Player } from './team.interface';
-import { Position } from './team/enums/enums';
+import { Position } from './enums';
 
 @Component({
   selector: 'app-root',
