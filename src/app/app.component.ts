@@ -15,6 +15,10 @@ export class AppComponent implements OnInit {
   coach: any;
   goalKeepers: any[] = [];
   defenders: any[] = [];
+  attackers: any[] = [];
+  midfielders: any[] = [];
+  totalPlayers: number = 0;
+  coachSelected: any;
 
   constructor(
     private teamService: TeamV2Service
@@ -47,10 +51,16 @@ export class AppComponent implements OnInit {
 
   savePlayer(player: any) {
     if (player.position === Position.Goalkeeper) {
-      this.savePlayerByPosition(player, this.goalKeepers, 3);
+      this.savePlayerByPosition(player, this.goalKeepers, 2);
     }
     if (player.position === Position.Defender) {
-      this.savePlayerByPosition(player, this.defenders, 3);
+      this.savePlayerByPosition(player, this.defenders, 4);
+    }
+    if (player.position === Position.Midfielder) {
+      this.savePlayerByPosition(player, this.midfielders, 4);
+    }
+    if (player.position === Position.Attacker) {
+      this.savePlayerByPosition(player, this.attackers, 2);
     }
   }
 
@@ -65,6 +75,8 @@ export class AppComponent implements OnInit {
       photo: player.photo,
       position: player.position,
     });
+
+    this.calculateTotalPlayers()
   }
 
   deletePlayer(player: any) {
@@ -74,6 +86,12 @@ export class AppComponent implements OnInit {
     if (player.position === Position.Defender) {
       this.deletePlayerByPosition(player, this.defenders);
     }
+    if (player.position === Position.Midfielder) {
+      this.deletePlayerByPosition(player, this.midfielders);
+    }
+    if (player.position === Position.Attacker) {
+      this.deletePlayerByPosition(player, this.attackers);
+    }
   }
 
   private deletePlayerByPosition(player: any, listElements: any[]) {
@@ -81,6 +99,19 @@ export class AppComponent implements OnInit {
 
     if (playerIndex !== -1) {
       listElements.splice(playerIndex, 1);
+    }
+
+   this.calculateTotalPlayers();
+  }
+
+  private calculateTotalPlayers(){
+    this.totalPlayers = this.goalKeepers.length + this.defenders.length + this.midfielders.length + this.attackers.length;
+  }
+
+  saveCoach(coach:any){
+    this.coachSelected = {
+      name: coach.name,
+      photo: coach.photo
     }
   }
 }
