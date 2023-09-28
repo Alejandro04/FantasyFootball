@@ -1,0 +1,129 @@
+<div class="appContainer">
+  <div>
+    <mat-card class="sidebarCard">
+      <mat-form-field>
+        <mat-label>Selecciona un equipo</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let country of countries" [value]="country.id">
+            {{country.name}}
+            <img style="width: 20px;" src="{{ country.logo }}" alt="{{country.name}}">
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-label>Entrenador</mat-label>
+      <div class="coachContainer">
+        <section class="playerContainer" (click)="saveCoach(coach)">
+          <div class="playerDetail">
+            <img class="playerImg" src="{{ coach.photo }}" alt="{{ coach.name }}">
+            <div>
+              <span>{{ coach.name }}</span>
+            </div>
+          </div>
+          <div class="playerPosition">
+            <span>{{ coach.position }}</span>
+          </div>
+        </section>
+      </div>
+
+      <mat-list class="playerList">
+        <mat-label>Jugadores</mat-label>
+        <ng-container *ngFor="let player of players">
+          <mat-list-item>
+            <section class="playerContainer" (click)="savePlayer(player)">
+              <div class="playerDetail">
+                <img class="playerImg" src="{{ player.photo }}" alt="{{ player.name }}">
+                <div>
+                  <span>{{ player.name }}</span>
+                </div>
+              </div>
+              <div class="playerPosition">
+                <span>{{ player.position }}</span>
+              </div>
+            </section>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-container>
+      </mat-list>
+    </mat-card>
+  </div>
+  <div class="content">
+    <div class="team">
+      <section class="itemTitle">
+        <p>Mi equipo</p>
+        <p> Total jugadores {{ totalPlayers }} / 16 </p>
+      </section>
+      <section class="teamItem">
+        <div>
+          <div class="itemTitle">
+            <p>Goalkeeper</p>
+            <p>Al menos 2</p>
+          </div>
+          <ng-container>
+            <div class="itemPlayers">
+              <div *ngFor="let item of goalKeepers">
+                <span class="close" (click)="deletePlayer(item)">x</span>
+                <img src="{{ item?.photo }}" alt="{{ item?.name }}">
+                <span class="itemName"> {{ item?.name }} </span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div>
+          <div class="itemTitle">
+            <p>Defender</p>
+            <p>Al menos 4</p>
+          </div>
+          <ng-container>
+            <div class="itemPlayers">
+              <div *ngFor="let item of defenders">
+                <span class="close" (click)="deletePlayer(item)">x</span>
+                <img src="{{ item?.photo }}" alt="{{ item?.name }}">
+                <span class="itemName"> {{ item?.name }} </span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div>
+          <div class="itemTitle">
+            <p>Midfielder</p>
+            <p>Al menos 4</p>
+          </div>
+          <ng-container>
+            <div class="itemPlayers">
+              <div *ngFor="let item of midfielders">
+                <span class="close" (click)="deletePlayer(item)">x</span>
+                <img src="{{ item?.photo }}" alt="{{ item?.name }}">
+                <span class="itemName"> {{ item?.name }} </span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div>
+          <div class="itemTitle">
+            <p>Attacker</p>
+            <p>Al menos 2</p>
+          </div>
+          <ng-container>
+            <div class="itemPlayers">
+              <div *ngFor="let item of attackers">
+                <span class="close" (click)="deletePlayer(item)">x</span>
+                <img src="{{ item?.photo }}" alt="{{ item?.name }}">
+                <span class="itemName"> {{ item?.name }} </span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </section>
+    </div>
+    <div class="coach">
+      <div *ngIf="coachSelected">
+        <span class="close" (click)="deleteCoach()">x</span>
+        <img src="{{ coachSelected?.photo }}" alt="{{ coachSelected?.name }}">
+        <p>
+          {{ coachSelected?.name }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

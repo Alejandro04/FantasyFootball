@@ -14,10 +14,12 @@ import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
+import { TeamComponent } from './team/team.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TeamComponent
   ],
   imports: [
     BrowserModule,
