@@ -58,7 +58,10 @@
         <div>
           <div class="itemTitle">
             <p>Goalkeeper</p>
-            <p>Al menos 2</p>
+            <p>Al menos 2  
+              <span *ngIf="goalKeepers.length === 2">🟢</span> 
+              <span *ngIf="goalKeepers.length !== 2">🔴</span> 
+            </p>
           </div>
           <ng-container>
             <div class="itemPlayers">
@@ -73,7 +76,10 @@
         <div>
           <div class="itemTitle">
             <p>Defender</p>
-            <p>Al menos 4</p>
+            <p>Al menos 4
+              <span *ngIf="defenders.length === 4">🟢</span> 
+              <span *ngIf="defenders.length !== 4">🔴</span> 
+            </p>
           </div>
           <ng-container>
             <div class="itemPlayers">
@@ -88,7 +94,10 @@
         <div>
           <div class="itemTitle">
             <p>Midfielder</p>
-            <p>Al menos 4</p>
+            <p>Al menos 4
+              <span *ngIf="midfielders.length === 4">🟢</span> 
+              <span *ngIf="midfielders.length !== 4">🔴</span> 
+            </p>
           </div>
           <ng-container>
             <div class="itemPlayers">
@@ -103,7 +112,10 @@
         <div>
           <div class="itemTitle">
             <p>Attacker</p>
-            <p>Al menos 2</p>
+            <p>Al menos 2
+              <span *ngIf="attackers.length === 2">🟢</span> 
+              <span *ngIf="attackers.length !== 2">🔴</span> 
+            </p>
           </div>
           <ng-container>
             <div class="itemPlayers">
@@ -120,7 +132,10 @@
     <div class="coach">
       <div class="itemTitle" style="margin-top: -20px">
         <p>Coach</p>
-        <p>Al menos 1</p>
+        <p>Al menos 1
+          <span *ngIf="coachSelected">🟢</span> 
+          <span *ngIf="!coachSelected">🔴</span> 
+        </p>
       </div>
       <div *ngIf="coachSelected" class="coachItem">
         <span class="close" (click)="deleteCoach()">x</span>
