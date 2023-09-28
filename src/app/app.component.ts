@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TeamV2Service } from './teamv2.service';
 import { Team } from './country.interface';
 import { Player } from './team.interface';
+import { Position } from './team/enums/enums';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ export class AppComponent implements OnInit {
   countries: Team[] = [];
   players: Player[] = [];
   coach: any;
-  goalKeepers: any[] = []
+  goalKeepers: any[] = [];
+  defenders: any[] = [];
 
   constructor(
     private teamService: TeamV2Service
@@ -42,32 +44,43 @@ export class AppComponent implements OnInit {
     })
   }
 
+
   savePlayer(player: any) {
-    if (player.position === 'Goalkeeper' && this.goalKeepers.length <= 3) {
-
-      const savedPlayer = this.goalKeepers.find((item) => {
-        return item.id === player.id
-      })
-
-      if (savedPlayer) return
-
-      this.goalKeepers = [
-        ...this.goalKeepers,
-        {
-          id: player.id,
-          name: player.name,
-          photo: player.photo,
-          position: player.position
-        }
-      ]
+    if (player.position === Position.Goalkeeper) {
+      this.savePlayerByPosition(player, this.goalKeepers, 3);
+    }
+    if (player.position === Position.Defender) {
+      this.savePlayerByPosition(player, this.defenders, 3);
     }
   }
 
-  deletePlayer(player:any){
-    if(player.position === 'Goalkeeper'){
-      this.goalKeepers = this.goalKeepers.filter((item) => {
-        return item.id !== player.id;
-      })
+  private savePlayerByPosition(player: any, listElements: any[], limit: number) {
+    const savedPlayer = listElements.find((item) => item.id === player.id);
+
+    if (savedPlayer || listElements.length >= limit) return;
+
+    listElements.push({
+      id: player.id,
+      name: player.name,
+      photo: player.photo,
+      position: player.position,
+    });
+  }
+
+  deletePlayer(player: any) {
+    if (player.position === Position.Goalkeeper) {
+      this.deletePlayerByPosition(player, this.goalKeepers);
+    }
+    if (player.position === Position.Defender) {
+      this.deletePlayerByPosition(player, this.defenders);
+    }
+  }
+
+  private deletePlayerByPosition(player: any, listElements: any[]) {
+    const playerIndex = listElements.findIndex((item) => item.id === player.id);
+
+    if (playerIndex !== -1) {
+      listElements.splice(playerIndex, 1);
     }
   }
 }

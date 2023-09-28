@@ -75,14 +75,12 @@
             <p>Defender</p>
             <p>Al menos 4</p>
           </div>
-          <ng-container>
-            <div class="itemPlayers">
-              <img src="./assets/user.png" alt="">
-              <img src="./assets/user.png" alt="">
-              <img src="./assets/user.png" alt="">
-              <img src="./assets/user.png" alt="">
+          <div class="itemPlayers">
+            <div *ngFor="let def of defenders">
+              <span class="close" (click)="deletePlayer(def)">x</span>
+              <img src="{{ def?.photo }}" alt="{{ def?.name }}">
             </div>
-          </ng-container>
+          </div>
         </div>
         <div>
           <div class="itemTitle">
