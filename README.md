@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Production
 
-https://fantasy-football-hazel.vercel.app/
+https://world-cup-fantasy.vercel.app/
 
 
 ## Development server
