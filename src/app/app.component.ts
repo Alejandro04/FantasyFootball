@@ -114,4 +114,8 @@ export class AppComponent implements OnInit {
       photo: coach.photo
     }
   }
+
+  deleteCoach(){
+    this.coachSelected = "";
+  }
 }

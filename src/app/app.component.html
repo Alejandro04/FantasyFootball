@@ -45,8 +45,6 @@
           <mat-divider></mat-divider>
         </ng-container>
       </mat-list>
-
-
     </mat-card>
   </div>
   <div class="content">
@@ -66,6 +64,7 @@
               <div *ngFor="let item of goalKeepers">
                 <span class="close" (click)="deletePlayer(item)">x</span>
                 <img src="{{ item?.photo }}" alt="{{ item?.name }}">
+                <span class="itemName"> {{ item?.name }} </span>
               </div>
             </div>
           </ng-container>
@@ -80,6 +79,7 @@
               <div *ngFor="let item of defenders">
                 <span class="close" (click)="deletePlayer(item)">x</span>
                 <img src="{{ item?.photo }}" alt="{{ item?.name }}">
+                <span class="itemName"> {{ item?.name }} </span>
               </div>
             </div>
           </ng-container>
@@ -94,6 +94,7 @@
               <div *ngFor="let item of midfielders">
                 <span class="close" (click)="deletePlayer(item)">x</span>
                 <img src="{{ item?.photo }}" alt="{{ item?.name }}">
+                <span class="itemName"> {{ item?.name }} </span>
               </div>
             </div>
           </ng-container>
@@ -108,6 +109,7 @@
               <div *ngFor="let item of attackers">
                 <span class="close" (click)="deletePlayer(item)">x</span>
                 <img src="{{ item?.photo }}" alt="{{ item?.name }}">
+                <span class="itemName"> {{ item?.name }} </span>
               </div>
             </div>
           </ng-container>
@@ -115,7 +117,8 @@
       </section>
     </div>
     <div class="coach">
-      <div>
+      <div *ngIf="coachSelected">
+        <span class="close" (click)="deleteCoach()">x</span>
         <img src="{{ coachSelected?.photo }}" alt="{{ coachSelected?.name }}">
         <p>
           {{ coachSelected?.name }}
