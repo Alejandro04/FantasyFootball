@@ -4,6 +4,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ApiCountryResponse } from './country.interface';
 import { ApiCouchResponse } from './coach.interface';
+import { ApiPlayerResponse } from './player.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class TeamV2Service {
   getTeam(teamID:number){
     teamID = 1
      return this.http.get<any>(`./assets/team.json`).pipe(
-     // return this.http.get<ApiCountryResponse>(`${this.urlTeam}?team=${teamID}`).pipe(  
+     //return this.http.get<ApiPlayerResponse>(`${this.urlTeam}?team=${teamID}`).pipe(  
         map((apiresponse) => apiresponse.response.map((team:any) => {
           return team.players;
         })),

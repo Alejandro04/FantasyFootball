@@ -3,6 +3,7 @@ import { TeamV2Service } from './teamv2.service';
 import { Team } from './country.interface';
 import { Player } from './team.interface';
 import { Position } from './enums';
+import { CouchResponse } from './coach.interface';
 
 @Component({
   selector: 'app-team',
@@ -12,13 +13,13 @@ import { Position } from './enums';
 export class TeamComponent implements OnInit {
   countries: Team[] = [];
   players: Player[] = [];
-  coach: any;
-  goalKeepers: any[] = [];
-  defenders: any[] = [];
-  attackers: any[] = [];
-  midfielders: any[] = [];
+  coach: CouchResponse | any;
+  goalKeepers: Player[] = [];
+  defenders: Player[] = [];
+  attackers: Player[] = [];
+  midfielders: Player[] = [];
   totalPlayers: number = 0;
-  coachSelected: any;
+  coachSelected: CouchResponse | any;
 
   constructor(
     private teamService: TeamV2Service
@@ -49,7 +50,7 @@ export class TeamComponent implements OnInit {
   }
 
 
-  savePlayer(player: any) {
+  savePlayer(player: Player) {
     if (player.position === Position.Goalkeeper) {
       this.savePlayerByPosition(player, this.goalKeepers, 2);
     }
@@ -64,8 +65,8 @@ export class TeamComponent implements OnInit {
     }
   }
 
-  private savePlayerByPosition(player: any, listElements: any[], limit: number) {
-    const savedPlayer = listElements.find((item) => item.id === player.id);
+  private savePlayerByPosition(player: Player, listElements: unknown[], limit: number) {
+    const savedPlayer = listElements.find((item:any) => item.id === player.id);
 
     if (savedPlayer || listElements.length >= limit) return;
 
@@ -79,7 +80,7 @@ export class TeamComponent implements OnInit {
     this.calculateTotalPlayers()
   }
 
-  deletePlayer(player: any) {
+  deletePlayer(player: Player) {
     if (player.position === Position.Goalkeeper) {
       this.deletePlayerByPosition(player, this.goalKeepers);
     }
@@ -94,8 +95,8 @@ export class TeamComponent implements OnInit {
     }
   }
 
-  private deletePlayerByPosition(player: any, listElements: any[]) {
-    const playerIndex = listElements.findIndex((item) => item.id === player.id);
+  private deletePlayerByPosition(player: Player, listElements: unknown[]) {
+    const playerIndex = listElements.findIndex((item:any) => item.id === player.id);
 
     if (playerIndex !== -1) {
       listElements.splice(playerIndex, 1);
@@ -108,7 +109,7 @@ export class TeamComponent implements OnInit {
     this.totalPlayers = this.goalKeepers.length + this.defenders.length + this.midfielders.length + this.attackers.length;
   }
 
-  saveCoach(coach:any){
+  saveCoach(coach:CouchResponse){
     this.coachSelected = {
       name: coach.name,
       photo: coach.photo
