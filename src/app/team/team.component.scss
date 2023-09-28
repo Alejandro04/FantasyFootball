@@ -28,16 +28,6 @@
 
 .team {
   flex-basis: 80%;
-
-  .itemTitle {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    font-size: 18px;
-    background: #fff;
-    border: 1px solid #ddd;
-  }
-
   .teamItem {
     display: flex;
     justify-content: space-around;
@@ -57,7 +47,17 @@
   }
 }
 
+.itemTitle {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: 18px;
+  background: #fff;
+  border: 1px solid #ddd;
+}
+
 .coach {
+  position: relative;
   background: #eee;
   flex-basis: 20%;
   text-align: center;
@@ -108,6 +108,10 @@
   border-radius: 10px;
 }
 
+.coachItem{
+  margin-top: 10px;
+}
+
 .close {
   position: absolute;
   font-size: 18px;
@@ -122,4 +126,33 @@
   display: flex;
   margin: -15px 0 0 6px;
   font-weight: bold;
+}
+
+.btnSave{
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  background: #eee;
+  color: #000;
+  min-width: 100%;
+  margin: auto;
+  height: 40px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 0;
+  &:hover{
+    cursor: pointer;
+    background: gray;
+    color: #fff;
+  }
+}
+.validation{
+  background: red;
+  color: #fff;
+  padding: 10px;
+}
+.success{
+  background: green;
+  color: #fff;
+  padding: 10px;
 }

@@ -34,4 +34,5 @@ export interface Player {
   number: any
   position: string
   photo: string
+  selected: string
 }

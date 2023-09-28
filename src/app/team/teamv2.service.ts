@@ -46,7 +46,8 @@ export class TeamV2Service {
               id: player.id,
               name: player.name,
               position: player.position,
-              photo: player.photo
+              photo: player.photo,
+              selected: '#fff'
             }
         })),
           catchError((error) => {

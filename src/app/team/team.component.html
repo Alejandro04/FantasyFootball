@@ -13,15 +13,16 @@
 
       <mat-label>Entrenador</mat-label>
       <div class="coachContainer">
-        <section class="playerContainer" (click)="saveCoach(coach)">
+        <section class="playerContainer" 
+        (click)="saveCoach(coach)">
           <div class="playerDetail">
-            <img class="playerImg" src="{{ coach.photo }}" alt="{{ coach.name }}">
+            <img class="playerImg" src="{{ coach?.photo }}" alt="{{ coach?.name }}">
             <div>
-              <span>{{ coach.name }}</span>
+              <span>{{ coach?.name }}</span>
             </div>
           </div>
           <div class="playerPosition">
-            <span>{{ coach.position }}</span>
+            <span>{{ coach?.position }}</span>
           </div>
         </section>
       </div>
@@ -30,15 +31,15 @@
         <mat-label>Jugadores</mat-label>
         <ng-container *ngFor="let player of players">
           <mat-list-item>
-            <section class="playerContainer" (click)="savePlayer(player)">
+            <section class="playerContainer" [style.background]="player?.selected" (click)="savePlayer(player)">
               <div class="playerDetail">
-                <img class="playerImg" src="{{ player.photo }}" alt="{{ player.name }}">
+                <img class="playerImg" src="{{ player?.photo }}" alt="{{ player?.name }}">
                 <div>
-                  <span>{{ player.name }}</span>
+                  <span>{{ player?.name }}</span>
                 </div>
               </div>
               <div class="playerPosition">
-                <span>{{ player.position }}</span>
+                <span>{{ player?.position }}</span>
               </div>
             </section>
           </mat-list-item>
@@ -117,13 +118,25 @@
       </section>
     </div>
     <div class="coach">
-      <div *ngIf="coachSelected">
+      <div class="itemTitle">
+        <p>Coach</p>
+        <p>Al menos 1</p>
+      </div>
+      <div *ngIf="coachSelected" class="coachItem">
         <span class="close" (click)="deleteCoach()">x</span>
         <img src="{{ coachSelected?.photo }}" alt="{{ coachSelected?.name }}">
         <p>
           {{ coachSelected?.name }}
         </p>
       </div>
+
+      <div *ngIf="hasValidationMsg" class="validation">
+        Debe cumplir los requerimientos para guardar el team
+      </div>
+      <div *ngIf="hasTeamSaved" class="success">
+        Equipo guardado!
+      </div>
+      <button class="btnSave" (click)="saveTeam()">Save Team</button>
     </div>
   </div>
 </div>

@@ -12,7 +12,7 @@ import { CouchResponse } from './coach.interface';
 })
 export class TeamComponent implements OnInit {
   countries: Team[] = [];
-  players: Player[] = [];
+  players: any[] = [];
   coach: CouchResponse | any;
   goalKeepers: Player[] = [];
   defenders: Player[] = [];
@@ -20,6 +20,8 @@ export class TeamComponent implements OnInit {
   midfielders: Player[] = [];
   totalPlayers: number = 0;
   coachSelected: CouchResponse | any;
+  hasValidationMsg: boolean = false;
+  hasTeamSaved: boolean = false;
 
   constructor(
     private teamService: TeamV2Service
@@ -74,7 +76,7 @@ export class TeamComponent implements OnInit {
       id: player.id,
       name: player.name,
       photo: player.photo,
-      position: player.position,
+      position: player.position
     });
 
     this.calculateTotalPlayers()
@@ -119,4 +121,24 @@ export class TeamComponent implements OnInit {
   deleteCoach(){
     this.coachSelected = "";
   }
+
+  saveTeam(){
+    if(this.goalKeepers.length === 2 &&
+        this.defenders.length === 4 &&
+        this.midfielders.length === 4 &&
+        this.attackers.length === 2 && 
+        this.coachSelected){
+            localStorage.setItem('goalkeepers', JSON.stringify(this.goalKeepers));
+            localStorage.setItem('defenders', JSON.stringify(this.defenders))
+            localStorage.setItem('midfielders', JSON.stringify(this.midfielders));
+            localStorage.setItem('attackers', JSON.stringify(this.attackers))
+            localStorage.setItem('coachSelected', JSON.stringify(this.coachSelected));
+            this.hasTeamSaved = true;
+            this.hasValidationMsg = false;
+            return
+        }
+
+        this.hasTeamSaved = false;
+        this.hasValidationMsg = true;
+    }
 }
