@@ -30,8 +30,6 @@ export class TeamComponent implements OnInit {
 
   ngOnInit() {
     this.getCountries();
-    this.getTeam();
-    this.getCoach();
     this.getSavedTeam();
   }
 
@@ -41,14 +39,19 @@ export class TeamComponent implements OnInit {
     })
   }
 
-  getTeam() {
-    this.teamService.getTeam(1).subscribe((players) => {
+  selectCountry(country:any){
+    this.getTeam(country);
+    this.getCoach(country)
+  }
+
+  getTeam(country: any) {
+    this.teamService.getTeam(country.id).subscribe((players) => {
       this.players = players;
     })
   }
 
-  getCoach() {
-    this.teamService.getCoach(1).subscribe((coach) => {
+  getCoach(country:any) {
+    this.teamService.getCoach(country.id).subscribe((coach) => {
       this.coach = coach[0];
     })
   }

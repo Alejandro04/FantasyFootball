@@ -4,7 +4,8 @@
       <mat-form-field>
         <mat-label>Selecciona un equipo</mat-label>
         <mat-select>
-          <mat-option *ngFor="let country of countries" [value]="country.id">
+          <mat-option *ngFor="let country of countries" [value]="country.id" 
+          (click)="selectCountry(country)">
             {{country.name}}
             <img style="width: 20px;" src="{{ country.logo }}" alt="{{country.name}}">
           </mat-option>
@@ -13,7 +14,7 @@
 
       <mat-label>Entrenador</mat-label>
       <div class="coachContainer">
-        <section class="playerContainer" 
+        <section *ngIf="coach" class="playerContainer" 
         (click)="saveCoach(coach)">
           <div class="playerDetail">
             <img class="playerImg" src="{{ coach?.photo }}" alt="{{ coach?.name }}">

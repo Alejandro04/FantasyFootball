@@ -12,6 +12,7 @@ import { ApiPlayerResponse } from './player.interface';
 export class TeamV2Service {
   private urlCountries = "https://api-football-v1.p.rapidapi.com/v3/teams"
   private urlTeam = "https://api-football-v1.p.rapidapi.com/v3/players/squads"
+  private urlCoach = "https://api-football-v1.p.rapidapi.com/v3/coachs"
 
   constructor(
     private http: HttpClient
@@ -20,8 +21,8 @@ export class TeamV2Service {
   getCountries(): Observable<any[]>{
     const league = 1;
     const season = 2022;
-    //return this.http.get<any>(`${this.urlCountries}?league=${league}&season=${season}`).pipe(
-    return this.http.get<ApiCountryResponse>(`./assets/countries.json`).pipe(  
+    return this.http.get<ApiCountryResponse>(`${this.urlCountries}?league=${league}&season=${season}`).pipe(
+    //return this.http.get<ApiCountryResponse>(`./assets/countries.json`).pipe(  
     map((apiresponse) => apiresponse.response.map((country:any) => ({
         id: country.team.id,
         name: country.team.name,
@@ -34,10 +35,9 @@ export class TeamV2Service {
     );
   }
 
-  getTeam(teamID:number){
-    teamID = 1
-     return this.http.get<any>(`./assets/team.json`).pipe(
-     //return this.http.get<ApiPlayerResponse>(`${this.urlTeam}?team=${teamID}`).pipe(  
+  getTeam(teamID:number): Observable<any[]>{
+     //return this.http.get<any>(`./assets/team.json`).pipe(
+     return this.http.get<ApiPlayerResponse>(`${this.urlTeam}?team=${teamID}`).pipe(  
         map((apiresponse) => apiresponse.response.map((team:any) => {
           return team.players;
         })),
@@ -56,9 +56,10 @@ export class TeamV2Service {
         );
   }
 
-  getCoach(teamID: number){
-    return this.http.get<ApiCouchResponse>(`./assets/coach.json`).pipe(  
-      map((apiresponse) => apiresponse.response.map((coach:any) => ({
+  getCoach(teamID: number): Observable<any[]>{
+     //return this.http.get<ApiCouchResponse>(`./assets/coach.json`).pipe(  
+    return this.http.get<ApiCouchResponse>(`${this.urlCoach}?team=${teamID}`).pipe( 
+     map((apiresponse) => apiresponse.response.map((coach:any) => ({
           id: coach.id,
           name: coach.name,
           photo: coach.photo

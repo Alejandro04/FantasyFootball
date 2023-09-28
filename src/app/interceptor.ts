@@ -12,7 +12,7 @@ export class ApiInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     this.spinnerService.show();
-    const XRapidAPIKey = ""
+    const XRapidAPIKey = "f961752a6dmsh03f82ab0e8122efp160e0ajsn55aa28897d00"
     const XRapidAPIHost = "api-football-v1.p.rapidapi.com"
 
     const authReq = req.clone({
