@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Production
 
-https://fantasy-football-hazel.vercel.app/
+https://world-cup-fantasy.vercel.app/
 
 
 ## Development server
@@ -65,9 +65,3 @@ We can see a selected coach after of searched.
 ## Next step
 
 1. Make the project public and make an Angular video tutorial.
-
-
-
-
-
-
