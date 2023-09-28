@@ -22,6 +22,7 @@ export class TeamComponent implements OnInit {
   coachSelected: CouchResponse | any;
   hasValidationMsg: boolean = false;
   hasTeamSaved: boolean = false;
+  hasDataInLs: boolean = false;
 
   constructor(
     private teamService: TeamV2Service
@@ -31,6 +32,7 @@ export class TeamComponent implements OnInit {
     this.getCountries();
     this.getTeam();
     this.getCoach();
+    this.getSavedTeam();
   }
 
   getCountries() {
@@ -68,7 +70,7 @@ export class TeamComponent implements OnInit {
   }
 
   private savePlayerByPosition(player: Player, listElements: unknown[], limit: number) {
-    const savedPlayer = listElements.find((item:any) => item.id === player.id);
+    const savedPlayer = listElements.find((item: any) => item.id === player.id);
 
     if (savedPlayer || listElements.length >= limit) return;
 
@@ -98,47 +100,77 @@ export class TeamComponent implements OnInit {
   }
 
   private deletePlayerByPosition(player: Player, listElements: unknown[]) {
-    const playerIndex = listElements.findIndex((item:any) => item.id === player.id);
+    const playerIndex = listElements.findIndex((item: any) => item.id === player.id);
 
     if (playerIndex !== -1) {
       listElements.splice(playerIndex, 1);
     }
 
-   this.calculateTotalPlayers();
+    this.calculateTotalPlayers();
   }
 
-  private calculateTotalPlayers(){
+  private calculateTotalPlayers() {
     this.totalPlayers = this.goalKeepers.length + this.defenders.length + this.midfielders.length + this.attackers.length;
   }
 
-  saveCoach(coach:CouchResponse){
+  saveCoach(coach: CouchResponse) {
     this.coachSelected = {
       name: coach.name,
       photo: coach.photo
     }
   }
 
-  deleteCoach(){
+  deleteCoach() {
     this.coachSelected = "";
   }
 
-  saveTeam(){
-    if(this.goalKeepers.length === 2 &&
-        this.defenders.length === 4 &&
-        this.midfielders.length === 4 &&
-        this.attackers.length === 2 && 
-        this.coachSelected){
-            localStorage.setItem('goalkeepers', JSON.stringify(this.goalKeepers));
-            localStorage.setItem('defenders', JSON.stringify(this.defenders))
-            localStorage.setItem('midfielders', JSON.stringify(this.midfielders));
-            localStorage.setItem('attackers', JSON.stringify(this.attackers))
-            localStorage.setItem('coachSelected', JSON.stringify(this.coachSelected));
-            this.hasTeamSaved = true;
-            this.hasValidationMsg = false;
-            return
-        }
-
-        this.hasTeamSaved = false;
-        this.hasValidationMsg = true;
+  saveTeam() {
+    console.log("attackers", this.attackers)
+    if (this.goalKeepers.length === 2 &&
+      this.defenders.length === 4 &&
+      this.midfielders.length === 4 &&
+      this.attackers.length === 2 &&
+      this.coachSelected) {
+      localStorage.clear();
+      localStorage.setItem('goalkeepers', JSON.stringify(this.goalKeepers));
+      localStorage.setItem('defenders', JSON.stringify(this.defenders))
+      localStorage.setItem('midfielders', JSON.stringify(this.midfielders));
+      localStorage.setItem('attackers', JSON.stringify(this.attackers))
+      localStorage.setItem('coachSelected', JSON.stringify(this.coachSelected));
+      this.hasTeamSaved = true;
+      this.hasValidationMsg = false;
+      return
     }
+
+    this.hasTeamSaved = false;
+    this.hasValidationMsg = true;
+  }
+
+  getSavedTeam(){
+    const goalKeepers = localStorage.getItem('goalkeepers');
+    if(goalKeepers) {
+      this.hasDataInLs = true;
+      this.goalKeepers = JSON.parse(goalKeepers);
+    }
+
+    const defenders = localStorage.getItem('defenders');
+    if(defenders) {
+      this.defenders = JSON.parse(defenders);
+    }
+
+    const midfielders = localStorage.getItem('midfielders');
+    if(midfielders) {
+      this.midfielders = JSON.parse(midfielders);
+    }
+
+    const attackers = localStorage.getItem('attackers');
+    if(attackers) {
+      this.attackers = JSON.parse(attackers);
+    }
+
+    const coach = localStorage.getItem('coachSelected');
+    if(coach) {
+      this.coachSelected = JSON.parse(coach);
+    }
+  }
 }
