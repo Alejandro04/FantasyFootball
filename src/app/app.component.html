@@ -13,7 +13,7 @@
 
       <mat-label>Entrenador</mat-label>
       <div class="coachContainer">
-        <section class="playerContainer">
+        <section class="playerContainer" (click)="saveCoach(coach)">
           <div class="playerDetail">
             <img class="playerImg" src="{{ coach.photo }}" alt="{{ coach.name }}">
             <div>
@@ -53,7 +53,7 @@
     <div class="team">
       <section class="itemTitle">
         <p>Mi equipo</p>
-        <p> Total jugadores 4/16 </p>
+        <p> Total jugadores  {{ totalPlayers }} / 16 </p>
       </section>
       <section class="teamItem">
         <div>
@@ -63,9 +63,9 @@
           </div>
           <ng-container>
             <div class="itemPlayers">
-              <div *ngFor="let goal of goalKeepers">
-                <span class="close" (click)="deletePlayer(goal)">x</span>
-                <img src="{{ goal?.photo }}" alt="{{ goal?.name }}">
+              <div *ngFor="let item of goalKeepers">
+                <span class="close" (click)="deletePlayer(item)">x</span>
+                <img src="{{ item?.photo }}" alt="{{ item?.name }}">
               </div>
             </div>
           </ng-container>
@@ -77,10 +77,10 @@
           </div>
           <ng-container>
             <div class="itemPlayers">
-              <img src="./assets/user.png" alt="">
-              <img src="./assets/user.png" alt="">
-              <img src="./assets/user.png" alt="">
-              <img src="./assets/user.png" alt="">
+              <div *ngFor="let item of defenders">
+                <span class="close" (click)="deletePlayer(item)">x</span>
+                <img src="{{ item?.photo }}" alt="{{ item?.name }}">
+              </div>
             </div>
           </ng-container>
         </div>
@@ -91,10 +91,10 @@
           </div>
           <ng-container>
             <div class="itemPlayers">
-              <img src="./assets/user.png" alt="">
-              <img src="./assets/user.png" alt="">
-              <img src="./assets/user.png" alt="">
-              <img src="./assets/user.png" alt="">
+              <div *ngFor="let item of midfielders">
+                <span class="close" (click)="deletePlayer(item)">x</span>
+                <img src="{{ item?.photo }}" alt="{{ item?.name }}">
+              </div>
             </div>
           </ng-container>
         </div>
@@ -105,8 +105,10 @@
           </div>
           <ng-container>
             <div class="itemPlayers">
-              <img src="./assets/user.png" alt="">
-              <img src="./assets/user.png" alt="">
+              <div *ngFor="let item of attackers">
+                <span class="close" (click)="deletePlayer(item)">x</span>
+                <img src="{{ item?.photo }}" alt="{{ item?.name }}">
+              </div>
             </div>
           </ng-container>
         </div>
@@ -114,9 +116,9 @@
     </div>
     <div class="coach">
       <div>
-        <img src="./assets/user.png" alt="coach">
+        <img src="{{ coachSelected?.photo }}" alt="{{ coachSelected?.name }}">
         <p>
-          Zidane
+          {{ coachSelected?.name }}
         </p>
       </div>
     </div>
