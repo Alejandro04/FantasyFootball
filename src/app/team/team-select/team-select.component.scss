@@ -4,14 +4,6 @@
   gap: 1rem;
   grid-template-columns: 300px 1fr;
 
-  .sidebarCard {
-    padding: 15px;
-
-    p {
-      margin-bottom: 15px;
-    }
-  }
-
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
@@ -101,11 +93,6 @@
 .playerList {
   max-height: 432.5px;
   overflow: auto;
-}
-
-.coachContainer {
-  border: 1px solid #eee;
-  border-radius: 10px;
 }
 
 .coachItem{

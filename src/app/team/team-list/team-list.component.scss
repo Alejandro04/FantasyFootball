@@ -1,0 +1,46 @@
+.sidebarCard {
+  padding: 15px;
+
+  p {
+    margin-bottom: 15px;
+  }
+}
+
+.coachContainer {
+  border: 1px solid #eee;
+  border-radius: 10px;
+}
+
+.playerImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+
+.playerContainer {
+  display: flex;
+  justify-content: space-between;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.playerDetail {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px 5px 5px 0;
+}
+
+.playerPosition {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 5px;
+}
+
+.playerList {
+  max-height: 432.5px;
+  overflow: auto;
+}

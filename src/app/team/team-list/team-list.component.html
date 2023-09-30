@@ -1,0 +1,48 @@
+<div>
+  <mat-card class="sidebarCard">
+    <mat-form-field>
+      <mat-label>Selecciona un equipo</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let country of countries" [value]="country?.id" (click)="selectCountry(country)">
+          {{country.name}}
+          <img style="width: 20px;" src="{{ country.logo }}" alt="{{country?.name}}">
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-label>Entrenador</mat-label>
+    <div class="coachContainer">
+      <section *ngIf="coach" class="playerContainer" (click)="saveCoach(coach)">
+        <div class="playerDetail">
+          <img class="playerImg" src="{{ coach?.photo }}" alt="{{ coach?.name }}">
+          <div>
+            <span>{{ coach?.name }}</span>
+          </div>
+        </div>
+        <div class="playerPosition">
+          <span>{{ coach?.position }}</span>
+        </div>
+      </section>
+    </div>
+
+    <mat-list class="playerList">
+      <mat-label>Jugadores</mat-label>
+      <ng-container *ngFor="let player of players">
+        <mat-list-item>
+          <section class="playerContainer" [style.background]="player?.selected" (click)="savePlayer(player)">
+            <div class="playerDetail">
+              <img class="playerImg" src="{{ player?.photo }}" alt="{{ player?.name }}">
+              <div>
+                <span>{{ player?.name }}</span>
+              </div>
+            </div>
+            <div class="playerPosition">
+              <span>{{ player?.position }}</span>
+            </div>
+          </section>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-list>
+  </mat-card>
+</div>

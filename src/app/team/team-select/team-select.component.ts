@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { TeamV2Service } from './teamv2.service';
-import { Team } from './country.interface';
-import { Player } from './team.interface';
-import { Position } from './enums';
-import { CouchResponse } from './coach.interface';
+import { TeamV2Service } from '../teamv2.service';
+import { Team } from '../country.interface';
+import { Player } from '../team.interface';
+import { Position } from '../enums';
+import { CouchResponse } from '../coach.interface';
 
 @Component({
-  selector: 'app-team',
-  templateUrl: './team.component.html',
-  styleUrls: ['./team.component.scss']
+  selector: 'app-team-select',
+  templateUrl: './team-select.component.html',
+  styleUrls: ['./team-select.component.scss']
 })
-export class TeamComponent implements OnInit {
+export class TeamSelectComponent implements OnInit {
   countries: Team[] = [];
   players: any[] = [];
   coach: CouchResponse | any;
@@ -29,33 +29,23 @@ export class TeamComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getCountries();
     this.getSavedTeam();
+    this.getPlayerFromList();
+    this.getCoachFromList();
   }
 
-  getCountries() {
-    this.teamService.getCountries().subscribe((countries) => {
-      this.countries = countries;
-    })
+  getPlayerFromList() {
+    this.teamService.player$.subscribe((player) => {
+      this.savePlayer(player);
+    });
+
   }
 
-  selectCountry(country:any){
-    this.getTeam(country);
-    this.getCoach(country)
+  getCoachFromList() {
+    this.teamService.coach$.subscribe((coach) => {
+      this.saveCoach(coach);
+    });
   }
-
-  getTeam(country: any) {
-    this.teamService.getTeam(country.id).subscribe((players) => {
-      this.players = players;
-    })
-  }
-
-  getCoach(country:any) {
-    this.teamService.getCoach(country.id).subscribe((coach) => {
-      this.coach = coach[0];
-    })
-  }
-
 
   savePlayer(player: Player) {
     if (player.position === Position.Goalkeeper) {
@@ -128,7 +118,6 @@ export class TeamComponent implements OnInit {
   }
 
   saveTeam() {
-    console.log("attackers", this.attackers)
     if (this.goalKeepers.length === 2 &&
       this.defenders.length === 4 &&
       this.midfielders.length === 4 &&
@@ -149,30 +138,30 @@ export class TeamComponent implements OnInit {
     this.hasValidationMsg = true;
   }
 
-  getSavedTeam(){
+  getSavedTeam() {
     const goalKeepers = localStorage.getItem('goalkeepers');
-    if(goalKeepers) {
+    if (goalKeepers) {
       this.hasDataInLs = true;
       this.goalKeepers = JSON.parse(goalKeepers);
     }
 
     const defenders = localStorage.getItem('defenders');
-    if(defenders) {
+    if (defenders) {
       this.defenders = JSON.parse(defenders);
     }
 
     const midfielders = localStorage.getItem('midfielders');
-    if(midfielders) {
+    if (midfielders) {
       this.midfielders = JSON.parse(midfielders);
     }
 
     const attackers = localStorage.getItem('attackers');
-    if(attackers) {
+    if (attackers) {
       this.attackers = JSON.parse(attackers);
     }
 
     const coach = localStorage.getItem('coachSelected');
-    if(coach) {
+    if (coach) {
       this.coachSelected = JSON.parse(coach);
     }
   }
