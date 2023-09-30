@@ -19,16 +19,16 @@ export interface Paging {
 export interface CouchResponse {
   id: number
   name: string
-  firstname: string
-  lastname: string
-  age: number
-  birth: Birth
-  nationality: string
+  firstname?: string
+  lastname?: string
+  age?: number
+  birth?: Birth
+  nationality?: string
   height?: string
   weight?: string
   photo: string
-  team: Team
-  career: Career[]
+  team?: Team
+  career?: Career[]
 }
 
 export interface Birth {
